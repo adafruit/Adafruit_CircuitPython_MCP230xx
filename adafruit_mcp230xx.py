@@ -57,7 +57,7 @@ _MCP23017_ADDRESS       = const(0x20)
 _MCP23017_IODIRA        = const(0x00)
 _MCP23017_IODIRB        = const(0x01)
 _MCP23017_IPOLA         = const(0x02)
-_MCP23017_IPOLA         = const(0x03)
+_MCP23017_IPOLB         = const(0x03)
 _MCP23017_GPINTENA      = const(0x04)
 _MCP23017_GPINTENB      = const(0x05)
 _MCP23008_DEFVALA       = const(0x06)
@@ -272,20 +272,18 @@ class MCP23017:
             device.write('\x00\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
             #pylint: enable=line-too-long
 
-    def read_u16le(self, register):
-        """Read an unsigned 16 bit little endian value from the specified 8-bit
-        register.
-        """
+    def _read_u16le(self, register):
+        # Read an unsigned 16 bit little endian value from the specified 8-bit
+        # register.
         with self._device as i2c:
             _BUFFER[0] = register & 0xFF
             i2c.write(_BUFFER, end=1, stop=False)
             i2c.readinto(_BUFFER, end=2)
             return (_BUFFER[1] << 8) | _BUFFER[0]
 
-    def write_u16le(self, register, val):
-        """Write an unsigned 16 bit little endian value to the specified 8-bit
-        register.
-        """
+    def _write_u16le(self, register, val):
+        # Write an unsigned 16 bit little endian value to the specified 8-bit
+        # register.
         with self._device as i2c:
             _BUFFER[0] = register & 0xFF
             _BUFFER[1] = val & 0xFF
@@ -298,22 +296,22 @@ class MCP23017:
         output value of the associated pin (0 = low, 1 = high), assuming that
         pin has been configured as an output previously.
         """
-        return self.read_u16le(_MCP23017_GPIOA)
+        return self._read_u16le(_MCP23017_GPIOA)
 
     @gpio.setter
     def gpio(self, val):
-        self.write_u16le(_MCP23017_GPIOA, val)
+        self._write_u16le(_MCP23017_GPIOA, val)
 
     @property
     def iodir(self):
         """Get and set the raw IODIR direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
-        return self.read_u16le(_MCP23017_IODIRA)
+        return self._read_u16le(_MCP23017_IODIRA)
 
     @iodir.setter
     def iodir(self, val):
-        self.write_u16le(_MCP23017_IODIRA, val)
+        self._write_u16le(_MCP23017_IODIRA, val)
 
     @property
     def gppu(self):
@@ -321,15 +319,15 @@ class MCP23017:
         if a pull-up is enabled on the specified pin (1 = pull-up enabled,
         0 = pull-up disabled).  Note pull-down resistors are NOT supported!
         """
-        return self.read_u16le(_MCP23017_GPPUA)
+        return self._read_u16le(_MCP23017_GPPUA)
 
-    @iodir.setter
-    def iodir(self, val):
-        self.write_u16le(_MCP23017_GPPUA, val)
+    @gppu.setter
+    def gppu(self, val):
+        self._write_u16le(_MCP23017_GPPUA, val)
 
     def get_pin(self, pin):
         """Convenience function to create an instance of the DigitalInOut class
         pointing at the specified pin of this MCP23017 device.
         """
-        assert 0 <= pin <= 7
+        assert 0 <= pin <= 15
         return DigitalInOut(pin, self)
