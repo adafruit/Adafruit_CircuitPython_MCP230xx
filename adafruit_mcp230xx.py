@@ -264,13 +264,10 @@ class MCP23017:
 
     def __init__(self, i2c, address=_MCP23017_ADDRESS):
         self._device = i2c_device.I2CDevice(i2c, address)
-        # Reset device state to all pins as inputs (safest option).
-        with self._device as device:
-            # Write to MCP23017_IODIR register 0xFFFF followed by zeros
-            # for defaults of other registers.
-            #pylint: disable=line-too-long
-            device.write('\x00\xFF\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
-            #pylint: enable=line-too-long
+        # Reset to all inputs with no pull-ups and no inverted polarity.
+        self.iodir = 0xFFFF
+        self.gppu = 0x0000
+        self._write_u16le(_MCP23017_IPOLA, 0x0000)
 
     def _read_u16le(self, register):
         # Read an unsigned 16 bit little endian value from the specified 8-bit
