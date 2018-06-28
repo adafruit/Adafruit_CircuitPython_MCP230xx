@@ -245,8 +245,8 @@ class MCP23008:
         """
         return self._read_u8(_MCP23008_GPPU)
 
-    @iodir.setter
-    def iodir(self, val):
+    @gppu.setter
+    def gppu(self, val):
         self._write_u8(_MCP23008_GPPU, val)
 
     def get_pin(self, pin):
