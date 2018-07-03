@@ -133,7 +133,7 @@ class DigitalInOut:
 
     @property
     def value(self):
-        """Get and set the value of the pin, either True for high or False for
+        """The value of the pin, either True for high or False for
         low.  Note you must configure as an output or input appropriately
         before reading and writing this value.
         """
@@ -148,7 +148,7 @@ class DigitalInOut:
 
     @property
     def direction(self):
-        """Get and set the direction of the pin, either True for an input or
+        """The direction of the pin, either True for an input or
         False for an output.
         """
         if _get_bit(self._mcp.iodir, self._pin):
@@ -216,7 +216,7 @@ class MCP23008:
 
     @property
     def gpio(self):
-        """Get and set the raw GPIO output register.  Each bit represents the
+        """The raw GPIO output register.  Each bit represents the
         output value of the associated pin (0 = low, 1 = high), assuming that
         pin has been configured as an output previously.
         """
@@ -228,7 +228,7 @@ class MCP23008:
 
     @property
     def iodir(self):
-        """Get and set the raw IODIR direction register.  Each bit represents
+        """The raw IODIR direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
         return self._read_u8(_MCP23008_IODIR)
@@ -239,7 +239,7 @@ class MCP23008:
 
     @property
     def gppu(self):
-        """Get and set the raw GPPU pull-up register.  Each bit represents
+        """The raw GPPU pull-up register.  Each bit represents
         if a pull-up is enabled on the specified pin (1 = pull-up enabled,
         0 = pull-up disabled).  Note pull-down resistors are NOT supported!
         """
@@ -304,7 +304,7 @@ class MCP23017:
 
     @property
     def gpio(self):
-        """Get and set the raw GPIO output register.  Each bit represents the
+        """The raw GPIO output register.  Each bit represents the
         output value of the associated pin (0 = low, 1 = high), assuming that
         pin has been configured as an output previously.
         """
@@ -316,7 +316,7 @@ class MCP23017:
 
     @property
     def gpioa(self):
-        """Get and set the raw GPIO A output register.  Each bit represents the
+        """The raw GPIO A output register.  Each bit represents the
         output value of the associated pin (0 = low, 1 = high), assuming that
         pin has been configured as an output previously.
         """
@@ -328,7 +328,7 @@ class MCP23017:
 
     @property
     def gpiob(self):
-        """Get and set the raw GPIO B output register.  Each bit represents the
+        """The raw GPIO B output register.  Each bit represents the
         output value of the associated pin (0 = low, 1 = high), assuming that
         pin has been configured as an output previously.
         """
@@ -340,7 +340,7 @@ class MCP23017:
 
     @property
     def iodir(self):
-        """Get and set the raw IODIR direction register.  Each bit represents
+        """The raw IODIR direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
         return self._read_u16le(_MCP23017_IODIRA)
@@ -351,7 +351,7 @@ class MCP23017:
 
     @property
     def iodira(self):
-        """Get and set the raw IODIR A direction register.  Each bit represents
+        """The raw IODIR A direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
         return self._read_u8(_MCP23017_IODIRA)
@@ -362,7 +362,7 @@ class MCP23017:
 
     @property
     def iodirb(self):
-        """Get and set the raw IODIR B direction register.  Each bit represents
+        """The raw IODIR B direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
         return self._read_u8(_MCP23017_IODIRB)
@@ -373,7 +373,7 @@ class MCP23017:
 
     @property
     def gppu(self):
-        """Get and set the raw GPPU pull-up register.  Each bit represents
+        """The raw GPPU pull-up register.  Each bit represents
         if a pull-up is enabled on the specified pin (1 = pull-up enabled,
         0 = pull-up disabled).  Note pull-down resistors are NOT supported!
         """
@@ -385,7 +385,7 @@ class MCP23017:
 
     @property
     def gppua(self):
-        """Get and set the raw GPPU A pull-up register.  Each bit represents
+        """The raw GPPU A pull-up register.  Each bit represents
         if a pull-up is enabled on the specified pin (1 = pull-up enabled,
         0 = pull-up disabled).  Note pull-down resistors are NOT supported!
         """
@@ -397,7 +397,7 @@ class MCP23017:
 
     @property
     def gppub(self):
-        """Get and set the raw GPPU B pull-up register.  Each bit represents
+        """The raw GPPU B pull-up register.  Each bit represents
         if a pull-up is enabled on the specified pin (1 = pull-up enabled,
         0 = pull-up disabled).  Note pull-down resistors are NOT supported!
         """
