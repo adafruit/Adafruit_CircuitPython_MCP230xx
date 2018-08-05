@@ -29,7 +29,7 @@ CircuitPython module for the MCP23017 and MCP23008 I2C I/O extenders.
 """
 import digitalio
 
-import adafruit_bus_device.i2c_device as i2c_device
+import adafruit_bus_device.i2c_device as i2c_dev
 
 from micropython import const
 
@@ -192,7 +192,7 @@ class MCP23008:
     """
 
     def __init__(self, i2c, address=_MCP23008_ADDRESS):
-        self._device = i2c_device.I2CDevice(i2c, address)
+        self._device = i2c_dev.I2CDevice(i2c, address)
         # Reset device state to all pins as inputs (safest option).
         with self._device as device:
             # Write to MCP23008_IODIR register 0xFF followed by 9 zeros
@@ -263,7 +263,7 @@ class MCP23017:
     """
 
     def __init__(self, i2c, address=_MCP23017_ADDRESS):
-        self._device = i2c_device.I2CDevice(i2c, address)
+        self._device = i2c_dev.I2CDevice(i2c, address)
         # Reset to all inputs with no pull-ups and no inverted polarity.
         self.iodir = 0xFFFF
         self.gppu = 0x0000

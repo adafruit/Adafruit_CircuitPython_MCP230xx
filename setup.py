@@ -52,7 +52,7 @@ setup(
     ],
 
     # What does your project relate to?
-    keywords='adafruit mcp23017 mcp23008 hardware micropython circuitpython',
+    keywords='adafruit mcp23017 mcp23008 i2c gpio expander hardware micropython circuitpython',
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
