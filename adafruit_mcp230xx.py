@@ -133,7 +133,7 @@ class DigitalInOut:
 
     @property
     def value(self):
-        """Get and set the value of the pin, either True for high or False for
+        """The value of the pin, either True for high or False for
         low.  Note you must configure as an output or input appropriately
         before reading and writing this value.
         """
@@ -148,7 +148,7 @@ class DigitalInOut:
 
     @property
     def direction(self):
-        """Get and set the direction of the pin, either True for an input or
+        """The direction of the pin, either True for an input or
         False for an output.
         """
         if _get_bit(self._mcp.iodir, self._pin):
@@ -216,7 +216,7 @@ class MCP23008:
 
     @property
     def gpio(self):
-        """Get and set the raw GPIO output register.  Each bit represents the
+        """The raw GPIO output register.  Each bit represents the
         output value of the associated pin (0 = low, 1 = high), assuming that
         pin has been configured as an output previously.
         """
@@ -228,7 +228,7 @@ class MCP23008:
 
     @property
     def iodir(self):
-        """Get and set the raw IODIR direction register.  Each bit represents
+        """The raw IODIR direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
         return self._read_u8(_MCP23008_IODIR)
@@ -239,7 +239,7 @@ class MCP23008:
 
     @property
     def gppu(self):
-        """Get and set the raw GPPU pull-up register.  Each bit represents
+        """The raw GPPU pull-up register.  Each bit represents
         if a pull-up is enabled on the specified pin (1 = pull-up enabled,
         0 = pull-up disabled).  Note pull-down resistors are NOT supported!
         """
@@ -287,9 +287,24 @@ class MCP23017:
             _BUFFER[2] = (val >> 8) & 0xFF
             i2c.write(_BUFFER, end=3)
 
+    def _read_u8(self, register):
+        # Read an unsigned 8 bit value from the specified 8-bit register.
+        with self._device as i2c:
+            _BUFFER[0] = register & 0xFF
+            i2c.write(_BUFFER, end=1, stop=False)
+            i2c.readinto(_BUFFER, end=1)
+            return _BUFFER[0]
+
+    def _write_u8(self, register, val):
+        # Write an 8 bit value to the specified 8-bit register.
+        with self._device as i2c:
+            _BUFFER[0] = register & 0xFF
+            _BUFFER[1] = val & 0xFF
+            i2c.write(_BUFFER, end=2)
+
     @property
     def gpio(self):
-        """Get and set the raw GPIO output register.  Each bit represents the
+        """The raw GPIO output register.  Each bit represents the
         output value of the associated pin (0 = low, 1 = high), assuming that
         pin has been configured as an output previously.
         """
@@ -300,8 +315,32 @@ class MCP23017:
         self._write_u16le(_MCP23017_GPIOA, val)
 
     @property
+    def gpioa(self):
+        """The raw GPIO A output register.  Each bit represents the
+        output value of the associated pin (0 = low, 1 = high), assuming that
+        pin has been configured as an output previously.
+        """
+        return self._read_u8(_MCP23017_GPIOA)
+
+    @gpioa.setter
+    def gpioa(self, val):
+        self._write_u8(_MCP23017_GPIOA, val)
+
+    @property
+    def gpiob(self):
+        """The raw GPIO B output register.  Each bit represents the
+        output value of the associated pin (0 = low, 1 = high), assuming that
+        pin has been configured as an output previously.
+        """
+        return self._read_u8(_MCP23017_GPIOB)
+
+    @gpiob.setter
+    def gpiob(self, val):
+        self._write_u8(_MCP23017_GPIOB, val)
+
+    @property
     def iodir(self):
-        """Get and set the raw IODIR direction register.  Each bit represents
+        """The raw IODIR direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
         return self._read_u16le(_MCP23017_IODIRA)
@@ -311,8 +350,30 @@ class MCP23017:
         self._write_u16le(_MCP23017_IODIRA, val)
 
     @property
+    def iodira(self):
+        """The raw IODIR A direction register.  Each bit represents
+        direction of a pin, either 1 for an input or 0 for an output mode.
+        """
+        return self._read_u8(_MCP23017_IODIRA)
+
+    @iodira.setter
+    def iodira(self, val):
+        self._write_u8(_MCP23017_IODIRA, val)
+
+    @property
+    def iodirb(self):
+        """The raw IODIR B direction register.  Each bit represents
+        direction of a pin, either 1 for an input or 0 for an output mode.
+        """
+        return self._read_u8(_MCP23017_IODIRB)
+
+    @iodirb.setter
+    def iodirb(self, val):
+        self._write_u8(_MCP23017_IODIRB, val)
+
+    @property
     def gppu(self):
-        """Get and set the raw GPPU pull-up register.  Each bit represents
+        """The raw GPPU pull-up register.  Each bit represents
         if a pull-up is enabled on the specified pin (1 = pull-up enabled,
         0 = pull-up disabled).  Note pull-down resistors are NOT supported!
         """
@@ -321,6 +382,30 @@ class MCP23017:
     @gppu.setter
     def gppu(self, val):
         self._write_u16le(_MCP23017_GPPUA, val)
+
+    @property
+    def gppua(self):
+        """The raw GPPU A pull-up register.  Each bit represents
+        if a pull-up is enabled on the specified pin (1 = pull-up enabled,
+        0 = pull-up disabled).  Note pull-down resistors are NOT supported!
+        """
+        return self._read_u8(_MCP23017_GPPUA)
+
+    @gppua.setter
+    def gppua(self, val):
+        self._write_u8(_MCP23017_GPPUA, val)
+
+    @property
+    def gppub(self):
+        """The raw GPPU B pull-up register.  Each bit represents
+        if a pull-up is enabled on the specified pin (1 = pull-up enabled,
+        0 = pull-up disabled).  Note pull-down resistors are NOT supported!
+        """
+        return self._read_u8(_MCP23017_GPPUB)
+
+    @gppub.setter
+    def gppub(self, val):
+        self._write_u8(_MCP23017_GPPUB, val)
 
     def get_pin(self, pin):
         """Convenience function to create an instance of the DigitalInOut class
