@@ -29,7 +29,7 @@ This is easily achieved by downloading
 Usage Example
 =============
 
-See examples/simpletest.py for a demo of the usage.
+See examples/mcp230xx_simpletest.py for a demo of the usage.
 
 Contributing
 ============
