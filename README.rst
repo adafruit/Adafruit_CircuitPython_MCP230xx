@@ -9,8 +9,8 @@ Introduction
     :target: https://discord.gg/nBQh6qu
     :alt: Discord
 
-.. image:: https://travis-ci.org/adafruit/Adafruit_CircuitPython_MCP230xx.svg?branch=master
-    :target: https://travis-ci.org/adafruit/Adafruit_CircuitPython_MCP230xx
+.. image:: https://travis-ci.com/adafruit/Adafruit_CircuitPython_MCP230xx.svg?branch=master
+    :target: https://travis-ci.com/adafruit/Adafruit_CircuitPython_MCP230xx
     :alt: Build Status
 
 CircuitPython module for the MCP23017 and MCP23008 I2C I/O extenders.
