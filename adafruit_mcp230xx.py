@@ -60,12 +60,11 @@ _MCP23017_IPOLA         = const(0x02)
 _MCP23017_IPOLB         = const(0x03)
 _MCP23017_GPINTENA      = const(0x04)
 _MCP23017_GPINTENB      = const(0x05)
-_MCP23008_DEFVALA       = const(0x06)
-_MCP23008_DEFVALB       = const(0x07)
-_MCP23008_INTCONA       = const(0x08)
-_MCP23008_INTCONB       = const(0x09)
-_MCP23008_IOCONA        = const(0x0A)
-_MCP23008_IOCONB        = const(0x0B)
+_MCP23017_DEFVALA       = const(0x06)
+_MCP23017_DEFVALB       = const(0x07)
+_MCP23017_INTCONA       = const(0x08)
+_MCP23017_INTCONB       = const(0x09)
+_MCP23017_IOCON         = const(0x0A)
 _MCP23017_GPPUA         = const(0x0C)
 _MCP23017_GPPUB         = const(0x0D)
 _MCP23008_INTFA         = const(0x0E)
@@ -413,3 +412,45 @@ class MCP23017:
         """
         assert 0 <= pin <= 15
         return DigitalInOut(pin, self)
+
+    @property
+    def intcon(self):
+        """The raw INTCON interrupt control register. The INTCON register
+        controls how the associated pin value is compared for the
+        interrupt-on-change feature. If  a  bit  is  set,  the  corresponding
+        I/O  pin  is  compared against the associated bit in the DEFVAL
+        register. If a bit value is clear, the corresponding I/O pin is
+        compared against the previous value.
+        """
+        return self._read_u16le(_MCP23017_INTCONA)
+
+    @intcon.setter
+    def intcon(self, val):
+        self._write_u16le(_MCP23017_INTCONA, val)
+
+    @property
+    def gpinten(self):
+        """The raw GPINTEN interrupt control register. The GPINTEN register
+        controls the interrupt-on-change feature for each pin. If a bit is
+        set, the corresponding pin is enabled for interrupt-on-change.
+        The DEFVAL and INTCON registers must also be configured if any pins
+        are enabled for interrupt-on-change.
+        """
+        return self._read_u16le(_MCP23017_GPINTENA)
+
+    @gpinten.setter
+    def gpinten(self, val):
+        self._write_u16le(_MCP23017_GPINTENA, val)
+
+    @property
+    def defval(self):
+        """The raw GPINTEN interrupt control register. The default comparison
+        value is configured in the DEFVAL register. If enabled (via GPINTEN
+        and INTCON) to compare against the DEFVAL register, an opposite value
+        on the associated pin will cause an interrupt to occur.
+        """
+        return self._read_u16le(_MCP23017_DEFVALA)
+
+    @intcon.setter
+    def defval(self, val):
+        self._write_u16le(_MCP23017_DEFVALA, val)
