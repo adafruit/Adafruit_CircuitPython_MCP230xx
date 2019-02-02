@@ -444,7 +444,7 @@ class MCP23017:
 
     @property
     def defval(self):
-        """The raw GPINTEN interrupt control register. The default comparison
+        """The raw DEFVAL interrupt control register. The default comparison
         value is configured in the DEFVAL register. If enabled (via GPINTEN
         and INTCON) to compare against the DEFVAL register, an opposite value
         on the associated pin will cause an interrupt to occur.
