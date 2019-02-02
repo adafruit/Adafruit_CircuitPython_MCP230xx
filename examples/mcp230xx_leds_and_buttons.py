@@ -1,4 +1,3 @@
-import time
 import board
 import busio
 from digitalio import Direction, Pull

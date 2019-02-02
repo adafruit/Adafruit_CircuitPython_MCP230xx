@@ -27,10 +27,9 @@ CircuitPython module for the MCP23017 and MCP23008 I2C I/O extenders.
 
 * Author(s): Tony DiCola
 """
+
+from adafruit_bus_device import i2c_device
 import digitalio
-
-import adafruit_bus_device.i2c_device as i2c_device
-
 from micropython import const
 
 
@@ -452,7 +451,7 @@ class MCP23017:
         """
         return self._read_u16le(_MCP23017_DEFVALA)
 
-    @intcon.setter
+    @defval.setter
     def defval(self, val):
         self._write_u16le(_MCP23017_DEFVALA, val)
 
@@ -469,6 +468,6 @@ class MCP23017:
         """
         return self._read_u8(_MCP23017_IOCON)
 
-    @intcon.setter
+    @iocon.setter
     def iocon(self, val):
         self._write_u8(_MCP23017_IOCON, val)
