@@ -266,6 +266,7 @@ class MCP23017:
         # Reset to all inputs with no pull-ups and no inverted polarity.
         self.iodir = 0xFFFF
         self.gppu = 0x0000
+        self.iocon = 0x4   # turn on IRQ Pins as open drain
         self._write_u16le(_MCP23017_IPOLA, 0x0000)
 
     def _read_u16le(self, register):
@@ -454,3 +455,20 @@ class MCP23017:
     @intcon.setter
     def defval(self, val):
         self._write_u16le(_MCP23017_DEFVALA, val)
+
+
+    @property
+    def iocon(self):
+        """The raw IOCON configuration register. Bit 1 controls interrupt
+        polarity (1 = active-high, 0 = active-low). Bit 2 is whether irq pin
+        is open drain (1 = open drain, 0 = push-pull). Bit 3 is unused.
+        Bit 4 is whether SDA slew rate is enabled (1 = yes). Bit 5 is if I2C
+        address pointer auto-increments (1 = no). Bit 6 is whether interrupt
+        pins are internally connected (1 = yes). Bit 7 is whether registers
+        are all in one bank (1 = no).
+        """
+        return self._read_u8(_MCP23017_IOCON)
+
+    @intcon.setter
+    def iocon(self, val):
+        self._write_u8(_MCP23017_IOCON, val)
