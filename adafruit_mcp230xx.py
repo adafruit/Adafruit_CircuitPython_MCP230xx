@@ -414,7 +414,7 @@ class MCP23017:
         return DigitalInOut(pin, self)
 
     @property
-    def intcon(self):
+    def interrupt_configuration(self):
         """The raw INTCON interrupt control register. The INTCON register
         controls how the associated pin value is compared for the
         interrupt-on-change feature. If  a  bit  is  set,  the  corresponding
@@ -424,12 +424,12 @@ class MCP23017:
         """
         return self._read_u16le(_MCP23017_INTCONA)
 
-    @intcon.setter
-    def intcon(self, val):
+    @interrupt_configuration.setter
+    def interrupt_configuration(self, val):
         self._write_u16le(_MCP23017_INTCONA, val)
 
     @property
-    def gpinten(self):
+    def interrupt_enable(self):
         """The raw GPINTEN interrupt control register. The GPINTEN register
         controls the interrupt-on-change feature for each pin. If a bit is
         set, the corresponding pin is enabled for interrupt-on-change.
@@ -438,12 +438,12 @@ class MCP23017:
         """
         return self._read_u16le(_MCP23017_GPINTENA)
 
-    @gpinten.setter
-    def gpinten(self, val):
+    @interrupt_enable.setter
+    def interrupt_enable(self, val):
         self._write_u16le(_MCP23017_GPINTENA, val)
 
     @property
-    def defval(self):
+    def default_value(self):
         """The raw DEFVAL interrupt control register. The default comparison
         value is configured in the DEFVAL register. If enabled (via GPINTEN
         and INTCON) to compare against the DEFVAL register, an opposite value
@@ -451,13 +451,13 @@ class MCP23017:
         """
         return self._read_u16le(_MCP23017_DEFVALA)
 
-    @defval.setter
-    def defval(self, val):
+    @default_value.setter
+    def default_value(self, val):
         self._write_u16le(_MCP23017_DEFVALA, val)
 
 
     @property
-    def iocon(self):
+    def io_control(self):
         """The raw IOCON configuration register. Bit 1 controls interrupt
         polarity (1 = active-high, 0 = active-low). Bit 2 is whether irq pin
         is open drain (1 = open drain, 0 = push-pull). Bit 3 is unused.
@@ -468,6 +468,6 @@ class MCP23017:
         """
         return self._read_u8(_MCP23017_IOCON)
 
-    @iocon.setter
-    def iocon(self, val):
+    @io_control.setter
+    def io_control(self, val):
         self._write_u8(_MCP23017_IOCON, val)

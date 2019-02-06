@@ -33,15 +33,15 @@ for pin in port_b_pins:
     pin.pull = Pull.UP
 
 # Set up to check all the port B pins (pins 8-15) w/interrupts!
-mcp.gpinten = 0xFF00        # INTerrupt ENable top 8 bits
+mcp.interrupt_enable = 0xFF00        # INTerrupt ENable top 8 bits
 # If intcon is set to 0's we will get interrupts on
 # both button presses and button releases
-mcp.intcon = 0x0000         # interrupt on any change
+mcp.interrupt_configuration = 0x0000         # interrupt on any change
 
 # Or, we can ask to be notified CONTINUOUSLY if a pin goes LOW (button press)
 # we won't get an IRQ pulse when the pin is HIGH!
-#mcp.intcon = 0xFF00         # notify pin value
-#mcp.defval = 0xFF00         # default value is 'high' so notify whenever 'low'
+#mcp.interrupt_configuration = 0xFF00         # notify pin value
+#mcp.default_value = 0xFF00         # default value is 'high' so notify whenever 'low'
 
 # connect the IRQ B pin to D4
 irq_b = DigitalInOut(board.D4)
