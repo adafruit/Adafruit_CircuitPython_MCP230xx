@@ -27,10 +27,9 @@ CircuitPython module for the MCP23017 and MCP23008 I2C I/O extenders.
 
 * Author(s): Tony DiCola
 """
+
+from adafruit_bus_device import i2c_device
 import digitalio
-
-import adafruit_bus_device.i2c_device as i2c_device
-
 from micropython import const
 
 
@@ -60,12 +59,11 @@ _MCP23017_IPOLA         = const(0x02)
 _MCP23017_IPOLB         = const(0x03)
 _MCP23017_GPINTENA      = const(0x04)
 _MCP23017_GPINTENB      = const(0x05)
-_MCP23008_DEFVALA       = const(0x06)
-_MCP23008_DEFVALB       = const(0x07)
-_MCP23008_INTCONA       = const(0x08)
-_MCP23008_INTCONB       = const(0x09)
-_MCP23008_IOCONA        = const(0x0A)
-_MCP23008_IOCONB        = const(0x0B)
+_MCP23017_DEFVALA       = const(0x06)
+_MCP23017_DEFVALB       = const(0x07)
+_MCP23017_INTCONA       = const(0x08)
+_MCP23017_INTCONB       = const(0x09)
+_MCP23017_IOCON         = const(0x0A)
 _MCP23017_GPPUA         = const(0x0C)
 _MCP23017_GPPUB         = const(0x0D)
 _MCP23008_INTFA         = const(0x0E)
@@ -267,6 +265,7 @@ class MCP23017:
         # Reset to all inputs with no pull-ups and no inverted polarity.
         self.iodir = 0xFFFF
         self.gppu = 0x0000
+        self.iocon = 0x4   # turn on IRQ Pins as open drain
         self._write_u16le(_MCP23017_IPOLA, 0x0000)
 
     def _read_u16le(self, register):
@@ -413,3 +412,62 @@ class MCP23017:
         """
         assert 0 <= pin <= 15
         return DigitalInOut(pin, self)
+
+    @property
+    def interrupt_configuration(self):
+        """The raw INTCON interrupt control register. The INTCON register
+        controls how the associated pin value is compared for the
+        interrupt-on-change feature. If  a  bit  is  set,  the  corresponding
+        I/O  pin  is  compared against the associated bit in the DEFVAL
+        register. If a bit value is clear, the corresponding I/O pin is
+        compared against the previous value.
+        """
+        return self._read_u16le(_MCP23017_INTCONA)
+
+    @interrupt_configuration.setter
+    def interrupt_configuration(self, val):
+        self._write_u16le(_MCP23017_INTCONA, val)
+
+    @property
+    def interrupt_enable(self):
+        """The raw GPINTEN interrupt control register. The GPINTEN register
+        controls the interrupt-on-change feature for each pin. If a bit is
+        set, the corresponding pin is enabled for interrupt-on-change.
+        The DEFVAL and INTCON registers must also be configured if any pins
+        are enabled for interrupt-on-change.
+        """
+        return self._read_u16le(_MCP23017_GPINTENA)
+
+    @interrupt_enable.setter
+    def interrupt_enable(self, val):
+        self._write_u16le(_MCP23017_GPINTENA, val)
+
+    @property
+    def default_value(self):
+        """The raw DEFVAL interrupt control register. The default comparison
+        value is configured in the DEFVAL register. If enabled (via GPINTEN
+        and INTCON) to compare against the DEFVAL register, an opposite value
+        on the associated pin will cause an interrupt to occur.
+        """
+        return self._read_u16le(_MCP23017_DEFVALA)
+
+    @default_value.setter
+    def default_value(self, val):
+        self._write_u16le(_MCP23017_DEFVALA, val)
+
+
+    @property
+    def io_control(self):
+        """The raw IOCON configuration register. Bit 1 controls interrupt
+        polarity (1 = active-high, 0 = active-low). Bit 2 is whether irq pin
+        is open drain (1 = open drain, 0 = push-pull). Bit 3 is unused.
+        Bit 4 is whether SDA slew rate is enabled (1 = yes). Bit 5 is if I2C
+        address pointer auto-increments (1 = no). Bit 6 is whether interrupt
+        pins are internally connected (1 = yes). Bit 7 is whether registers
+        are all in one bank (1 = no).
+        """
+        return self._read_u8(_MCP23017_IOCON)
+
+    @io_control.setter
+    def io_control(self, val):
+        self._write_u8(_MCP23017_IOCON, val)
