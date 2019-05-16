@@ -37,6 +37,7 @@ from .digital_inout import DigitalInOut
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 
+# pylint: disable=bad-whitespace
 _MCP23017_ADDRESS       = const(0x20)
 _MCP23017_IODIRA        = const(0x00)
 _MCP23017_IODIRB        = const(0x01)
@@ -52,12 +53,12 @@ _MCP23017_GPIOB         = const(0x13)
 
 
 class MCP23017(MCP230XX):
-    """Initialize MCP23017 instance on specified I2C bus and optionally
+    """Supports MCP23017 instance on specified I2C bus and optionally
     at the specified I2C address.
     """
 
     def __init__(self, i2c, address=_MCP23017_ADDRESS):
-        self._device = i2c_device.I2CDevice(i2c, address)
+        super().__init__(i2c, address)
         # Reset to all inputs with no pull-ups and no inverted polarity.
         self.iodir = 0xFFFF
         self.gppu = 0x0000

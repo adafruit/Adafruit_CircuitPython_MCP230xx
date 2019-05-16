@@ -37,6 +37,7 @@ from .digital_inout import DigitalInOut
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 
+# pylint: disable=bad-whitespace
 _MCP23008_ADDRESS       = const(0x20)
 _MCP23008_IODIR         = const(0x00)
 _MCP23008_GPPU          = const(0x06)
@@ -44,12 +45,12 @@ _MCP23008_GPIO          = const(0x09)
 
 
 class MCP23008(MCP230XX):
-    """Initialize MCP23008 instance on specified I2C bus and optionally
+    """Supports MCP23008 instance on specified I2C bus and optionally
     at the specified I2C address.
     """
 
     def __init__(self, i2c, address=_MCP23008_ADDRESS):
-        self._device = i2c_device.I2CDevice(i2c, address)
+        super().__init__(i2c, address)
         # Reset device state to all pins as inputs (safest option).
         with self._device as device:
             # Write to MCP23008_IODIR register 0xFF followed by 9 zeros

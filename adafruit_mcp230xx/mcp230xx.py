@@ -38,6 +38,10 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 _BUFFER = bytearray(3)
 
 class MCP230XX:
+    """Base class for MCP230xx devices."""
+
+    def __init__(self, i2c, address):
+        self._device = i2c_device.I2CDevice(i2c, address)
 
     def _read_u16le(self, register):
         # Read an unsigned 16 bit little endian value from the specified 8-bit
