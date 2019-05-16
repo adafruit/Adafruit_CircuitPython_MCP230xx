@@ -25,7 +25,7 @@ install:
 - pip install pylint circuitpython-build-tools Sphinx sphinx-rtd-theme
 - pip install --force-reinstall pylint==1.9.2
 script:
-- pylint adafruit_mcp230xx.py
+- pylint adafruit_mcp230xx.py/*.py
 - ([[ ! -d "examples" ]] || pylint --disable=missing-docstring,invalid-name,bad-whitespace
   examples/*.py)
 - circuitpython-build-bundles --filename_prefix adafruit-circuitpython-mcp230xx --library_location
