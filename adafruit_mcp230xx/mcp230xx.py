@@ -29,6 +29,8 @@ CircuitPython module for the MCP23017 and MCP23008 I2C I/O extenders.
 * Author(s): Tony DiCola
 """
 
+from adafruit_bus_device import i2c_device
+
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 
@@ -37,6 +39,8 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 # However this is explicitly not thread safe or re-entrant by design!
 _BUFFER = bytearray(3)
 
+
+# pylint: disable=too-few-public-methods
 class MCP230XX:
     """Base class for MCP230xx devices."""
 

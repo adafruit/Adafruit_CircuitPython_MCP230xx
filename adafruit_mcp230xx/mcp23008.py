@@ -30,7 +30,6 @@ CircuitPython module for the MCP23008 I2C I/O extenders.
 """
 
 from micropython import const
-from adafruit_bus_device import i2c_device
 from .mcp230xx import MCP230XX
 from .digital_inout import DigitalInOut
 
