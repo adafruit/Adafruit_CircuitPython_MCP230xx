@@ -49,6 +49,10 @@ _MCP23017_GPPUA         = const(0x0C)
 _MCP23017_GPPUB         = const(0x0D)
 _MCP23017_GPIOA         = const(0x12)
 _MCP23017_GPIOB         = const(0x13)
+_MCP23017_INTFA         = const(0x0E)
+_MCP23017_INTFB         = const(0x0F)
+_MCP23017_INTCAPA       = const(0x10)
+_MCP23017_INTCAPB       = const(0x11)
 
 
 class MCP23017(MCP230XX):
@@ -218,7 +222,6 @@ class MCP23017(MCP230XX):
     def default_value(self, val):
         self._write_u16le(_MCP23017_DEFVALA, val)
 
-
     @property
     def io_control(self):
         """The raw IOCON configuration register. Bit 1 controls interrupt
@@ -234,3 +237,41 @@ class MCP23017(MCP230XX):
     @io_control.setter
     def io_control(self, val):
         self._write_u8(_MCP23017_IOCON, val)
+
+    @property
+    def flagged(self):
+        """Returns a list with the pin numbers that caused an interrupt
+        port A ----> pins 0-7
+        port B ----> pins 8-15
+        """
+        intf = format(self._read_u16le(_MCP23017_INTFA), '016b')
+        flagged = [i for i, val in enumerate(reversed(intf)) if val == '1']
+        return flagged
+
+    @property
+    def flaggeda(self):
+        """Returns a list of pin numbers that coused an interrupt in port A
+        pins: 0-7
+        """
+        intfa = format(self._read_u8(_MCP23017_INTFA), '08b')
+        flaggeda = [i for i, val in enumerate(reversed(intfa)) if val == '1']
+        return flaggeda
+
+    @property
+    def flaggedb(self):
+        """Returns a list of pin numbers that coused an interrupt in port A
+        pins: 8-15
+        """
+        intfb = format(self._read_u8(_MCP23017_INTFB), '08b')
+        flaggeda = [i+8 for i, val in enumerate(reversed(intfb)) if val == '1']
+        return flaggeda
+
+    def clear_ints(self):
+        """Clears interrupts by reading INTCAP."""
+        self._read_u16le(_MCP23017_INTCAPA)
+
+    def clear_inta(self):
+        self._read_u8(_MCP23017_INTCAPA)
+
+    def clear_intb(self):
+        self._read_u8(_MCP23017_INTCAPB)
