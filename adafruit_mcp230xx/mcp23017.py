@@ -259,7 +259,7 @@ class MCP23017(MCP230XX):
 
     @property
     def flaggedb(self):
-        """Returns a list of pin numbers that coused an interrupt in port A
+        """Returns a list of pin numbers that coused an interrupt in port B
         pins: 8-15
         """
         intfb = format(self._read_u8(_MCP23017_INTFB), '08b')
@@ -271,7 +271,9 @@ class MCP23017(MCP230XX):
         self._read_u16le(_MCP23017_INTCAPA)
 
     def clear_inta(self):
+        """Clears port A interrupts."""
         self._read_u8(_MCP23017_INTCAPA)
 
     def clear_intb(self):
+        """Clears port B interrupts."""
         self._read_u8(_MCP23017_INTCAPB)
