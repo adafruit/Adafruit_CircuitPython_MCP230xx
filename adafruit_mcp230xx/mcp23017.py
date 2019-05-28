@@ -245,7 +245,7 @@ class MCP23017(MCP230XX):
         port B ----> pins 8-15
         """
         intf = self._read_u16le(_MCP23017_INTFA)
-        flg = [i for i in range(16) if (intf & (1 << i))]
+        flg = [i for i in range(16) if intf & (1 << i)]
         return flg
 
     @property
@@ -254,7 +254,7 @@ class MCP23017(MCP230XX):
         pins: 0-7
         """
         intfa = self._read_u8(_MCP23017_INTFA)
-        flga = [i for i in range(8) if (intfa & (1 << i))]
+        flga = [i for i in range(8) if intfa & (1 << i)]
         return flga
 
     @property
@@ -263,7 +263,7 @@ class MCP23017(MCP230XX):
         pins: 8-15
         """
         intfb = self._read_u8(_MCP23017_INTFB)
-        flgb = [i+8 for i in range(8) if (intfb & (1 << i))]
+        flgb = [i+8 for i in range(8) if intfb & (1 << i)]
         return flgb
 
     def clear_ints(self):
