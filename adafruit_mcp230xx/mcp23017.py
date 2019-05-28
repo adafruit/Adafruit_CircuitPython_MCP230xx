@@ -239,32 +239,32 @@ class MCP23017(MCP230XX):
         self._write_u8(_MCP23017_IOCON, val)
 
     @property
-    def flagged(self):
+    def int_flg(self):
         """Returns a list with the pin numbers that caused an interrupt
         port A ----> pins 0-7
         port B ----> pins 8-15
         """
-        intf = format(self._read_u16le(_MCP23017_INTFA), '016b')
-        flagged = [i for i, val in enumerate(reversed(intf)) if val == '1']
-        return flagged
+        intf = self._read_u16le(_MCP23017_INTFA)
+        flg = [i for i in range(16) if (intf & (1 << i))]
+        return flg
 
     @property
-    def flaggeda(self):
+    def int_flga(self):
         """Returns a list of pin numbers that coused an interrupt in port A
         pins: 0-7
         """
-        intfa = format(self._read_u8(_MCP23017_INTFA), '08b')
-        flaggeda = [i for i, val in enumerate(reversed(intfa)) if val == '1']
-        return flaggeda
+        intfa = self._read_u8(_MCP23017_INTFA)
+        flga = [i for i in range(8) if (intfa & (1 << i))]
+        return flga
 
     @property
-    def flaggedb(self):
+    def int_flgb(self):
         """Returns a list of pin numbers that coused an interrupt in port B
         pins: 8-15
         """
-        intfb = format(self._read_u8(_MCP23017_INTFB), '08b')
-        flaggeda = [i+8 for i, val in enumerate(reversed(intfb)) if val == '1']
-        return flaggeda
+        intfb = self._read_u8(_MCP23017_INTFB)
+        flgb = [i+8 for i in range(8) if (intfb & (1 << i))]
+        return flgb
 
     def clear_ints(self):
         """Clears interrupts by reading INTCAP."""
