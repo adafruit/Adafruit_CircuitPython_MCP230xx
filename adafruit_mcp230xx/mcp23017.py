@@ -239,32 +239,32 @@ class MCP23017(MCP230XX):
         self._write_u8(_MCP23017_IOCON, val)
 
     @property
-    def int_flg(self):
+    def int_flag(self):
         """Returns a list with the pin numbers that caused an interrupt
         port A ----> pins 0-7
         port B ----> pins 8-15
         """
         intf = self._read_u16le(_MCP23017_INTFA)
-        flg = [i for i in range(16) if intf & (1 << i)]
-        return flg
+        flags = [pin for pin in range(16) if intf & (1 << pin)]
+        return flags
 
     @property
-    def int_flga(self):
-        """Returns a list of pin numbers that coused an interrupt in port A
+    def int_flaga(self):
+        """Returns a list of pin numbers that caused an interrupt in port A
         pins: 0-7
         """
         intfa = self._read_u8(_MCP23017_INTFA)
-        flga = [i for i in range(8) if intfa & (1 << i)]
-        return flga
+        flags = [pin for pin in range(8) if intfa & (1 << pin)]
+        return flags
 
     @property
-    def int_flgb(self):
-        """Returns a list of pin numbers that coused an interrupt in port B
+    def int_flagb(self):
+        """Returns a list of pin numbers that caused an interrupt in port B
         pins: 8-15
         """
         intfb = self._read_u8(_MCP23017_INTFB)
-        flgb = [i+8 for i in range(8) if intfb & (1 << i)]
-        return flgb
+        flags = [pin+8 for pin in range(8) if intfb & (1 << pin)]
+        return flags
 
     def clear_ints(self):
         """Clears interrupts by reading INTCAP."""
