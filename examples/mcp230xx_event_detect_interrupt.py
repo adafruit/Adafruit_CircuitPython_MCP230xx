@@ -1,9 +1,10 @@
+from time import sleep
+
 import board
 import busio
+from digitalio import Direction, Pull
 from RPi import GPIO
-from digitalio import DigitalInOut, Direction, Pull
 from adafruit_mcp230xx.mcp23017 import MCP23017
-from time import sleep
 
 # Initialize the I2C bus:
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -20,7 +21,7 @@ pins = []
 for pin in range(0, 16):
     pins.append(mcp.get_pin(pin))
 
-# Set all the pins to input 
+# Set all the pins to input
 for pin in pins:
     pin.direction = Direction.INPUT
     pin.pull = Pull.UP
@@ -40,10 +41,9 @@ mcp.clear_ints()        # Interrupts need to be cleared initially
 
 def print_interrupt(port):
     '''Callback function to be called when an Interrupt occurs.'''
-    flga = mcp.int_flaga
-    flgb = mcp.int_flagb
-    for pin in mcp.int_flag:
-        print("Pin number: {} changed to: {}".format(pin, pins[pin].value ))
+    for pin_flag in mcp.int_flag:
+        print("Interrupt connected to Pin: {}".format(port))
+        print("Pin number: {} changed to: {}".format(pin_flag, pins[pin_flag].value))
     mcp.clear_ints()
 
 # connect either interrupt pin to the Raspberry pi's pin 17.
