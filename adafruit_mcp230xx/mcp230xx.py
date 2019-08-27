@@ -52,9 +52,9 @@ class MCP230XX:
         # register.
         with self._device as i2c:
             _BUFFER[0] = register & 0xFF
-            i2c.write(_BUFFER, end=1, stop=False)
-            i2c.readinto(_BUFFER, end=2)
-            return (_BUFFER[1] << 8) | _BUFFER[0]
+
+            i2c.write_then_readinto(_BUFFER, _BUFFER, out_end=1, in_start=1, in_end=3)
+            return (_BUFFER[2] << 8) | _BUFFER[1]
 
     def _write_u16le(self, register, val):
         # Write an unsigned 16 bit little endian value to the specified 8-bit
@@ -69,9 +69,9 @@ class MCP230XX:
         # Read an unsigned 8 bit value from the specified 8-bit register.
         with self._device as i2c:
             _BUFFER[0] = register & 0xFF
-            i2c.write(_BUFFER, end=1, stop=False)
-            i2c.readinto(_BUFFER, end=1)
-            return _BUFFER[0]
+
+            i2c.write_then_readinto(_BUFFER, _BUFFER, out_end=1, in_start=1, in_end=2)
+            return _BUFFER[1]
 
     def _write_u8(self, register, val):
         # Write an 8 bit value to the specified 8-bit register.
