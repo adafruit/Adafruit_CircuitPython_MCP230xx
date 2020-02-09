@@ -52,9 +52,8 @@ class MCP23008(MCP230XX):
         super().__init__(i2c, address)
         # Reset device state to all pins as inputs (safest option).
         with self._device as device:
-            # Write to MCP23008_IODIR register 0xFF followed by 9 zeros
-            # for defaults of other registers.
-            device.write('\x00\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+            self._write_u8(_MCP23008_IODIR, 0xFF)
+
 
     @property
     def gpio(self):
