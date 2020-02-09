@@ -51,8 +51,7 @@ class MCP23008(MCP230XX):
     def __init__(self, i2c, address=_MCP23008_ADDRESS):
         super().__init__(i2c, address)
         # Reset device state to all pins as inputs (safest option).
-        with self._device as device:
-            self._write_u8(_MCP23008_IODIR, 0xFF)
+        self._write_u8(_MCP23008_IODIR, 0xFF)
 
 
     @property
