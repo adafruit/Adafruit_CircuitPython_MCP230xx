@@ -57,9 +57,11 @@ class MCP23008(MCP230XX):
 
     def __init__(self, i2c, address=_MCP23008_ADDRESS):
         super().__init__(i2c, address)
-        # Reset device state to all pins as inputs (safest option).
-        self._write_u8(_MCP23008_IODIR, 0xFF)
 
+        # Reset to all inputs with no pull-ups and no inverted polarity.
+        self.iodir = 0xFF
+        self.gppu  = 0x00
+        self._write_u8(_MCP23008_IPOL, 0x00)
 
     @property
     def gpio(self):
