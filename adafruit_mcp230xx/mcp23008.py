@@ -39,7 +39,14 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 # pylint: disable=bad-whitespace
 _MCP23008_ADDRESS       = const(0x20)
 _MCP23008_IODIR         = const(0x00)
+_MCP23008_IPOL          = const(0x01)
+_MCP23008_GPINTEN       = const(0x02)
+_MCP23008_DEFVAL        = const(0x03)
+_MCP23008_INTCON        = const(0x04)
+_MCP23008_IOCON         = const(0x05)
 _MCP23008_GPPU          = const(0x06)
+_MCP23008_INTF          = const(0x07)
+_MCP23008_INTCAP        = const(0x08)
 _MCP23008_GPIO          = const(0x09)
 
 
@@ -50,11 +57,11 @@ class MCP23008(MCP230XX):
 
     def __init__(self, i2c, address=_MCP23008_ADDRESS):
         super().__init__(i2c, address)
-        # Reset device state to all pins as inputs (safest option).
-        with self._device as device:
-            # Write to MCP23008_IODIR register 0xFF followed by 9 zeros
-            # for defaults of other registers.
-            device.write('\x00\xFF\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+
+        # Reset to all inputs with no pull-ups and no inverted polarity.
+        self.iodir = 0xFF
+        self.gppu  = 0x00
+        self._write_u8(_MCP23008_IPOL, 0x00)
 
     @property
     def gpio(self):
