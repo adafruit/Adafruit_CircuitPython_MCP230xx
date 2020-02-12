@@ -39,7 +39,14 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 # pylint: disable=bad-whitespace
 _MCP23008_ADDRESS       = const(0x20)
 _MCP23008_IODIR         = const(0x00)
+_MCP23008_IPOL          = const(0x01)
+_MCP23008_GPINTEN       = const(0x02)
+_MCP23008_DEFVAL        = const(0x03)
+_MCP23008_INTCON        = const(0x04)
+_MCP23008_IOCON         = const(0x05)
 _MCP23008_GPPU          = const(0x06)
+_MCP23008_INTF          = const(0x07)
+_MCP23008_INTCAP        = const(0x08)
 _MCP23008_GPIO          = const(0x09)
 
 
