@@ -37,17 +37,17 @@ __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 
 # pylint: disable=bad-whitespace
-_MCP23008_ADDRESS       = const(0x20)
-_MCP23008_IODIR         = const(0x00)
-_MCP23008_IPOL          = const(0x01)
-_MCP23008_GPINTEN       = const(0x02)
-_MCP23008_DEFVAL        = const(0x03)
-_MCP23008_INTCON        = const(0x04)
-_MCP23008_IOCON         = const(0x05)
-_MCP23008_GPPU          = const(0x06)
-_MCP23008_INTF          = const(0x07)
-_MCP23008_INTCAP        = const(0x08)
-_MCP23008_GPIO          = const(0x09)
+_MCP23008_ADDRESS = const(0x20)
+_MCP23008_IODIR = const(0x00)
+_MCP23008_IPOL = const(0x01)
+_MCP23008_GPINTEN = const(0x02)
+_MCP23008_DEFVAL = const(0x03)
+_MCP23008_INTCON = const(0x04)
+_MCP23008_IOCON = const(0x05)
+_MCP23008_GPPU = const(0x06)
+_MCP23008_INTF = const(0x07)
+_MCP23008_INTCAP = const(0x08)
+_MCP23008_GPIO = const(0x09)
 
 
 class MCP23008(MCP230XX):
@@ -60,7 +60,7 @@ class MCP23008(MCP230XX):
 
         # Reset to all inputs with no pull-ups and no inverted polarity.
         self.iodir = 0xFF
-        self.gppu  = 0x00
+        self.gppu = 0x00
         self._write_u8(_MCP23008_IPOL, 0x00)
 
     @property

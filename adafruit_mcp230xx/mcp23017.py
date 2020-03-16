@@ -37,22 +37,22 @@ __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 
 # pylint: disable=bad-whitespace
-_MCP23017_ADDRESS       = const(0x20)
-_MCP23017_IODIRA        = const(0x00)
-_MCP23017_IODIRB        = const(0x01)
-_MCP23017_IPOLA         = const(0x02)
-_MCP23017_GPINTENA      = const(0x04)
-_MCP23017_DEFVALA       = const(0x06)
-_MCP23017_INTCONA       = const(0x08)
-_MCP23017_IOCON         = const(0x0A)
-_MCP23017_GPPUA         = const(0x0C)
-_MCP23017_GPPUB         = const(0x0D)
-_MCP23017_GPIOA         = const(0x12)
-_MCP23017_GPIOB         = const(0x13)
-_MCP23017_INTFA         = const(0x0E)
-_MCP23017_INTFB         = const(0x0F)
-_MCP23017_INTCAPA       = const(0x10)
-_MCP23017_INTCAPB       = const(0x11)
+_MCP23017_ADDRESS = const(0x20)
+_MCP23017_IODIRA = const(0x00)
+_MCP23017_IODIRB = const(0x01)
+_MCP23017_IPOLA = const(0x02)
+_MCP23017_GPINTENA = const(0x04)
+_MCP23017_DEFVALA = const(0x06)
+_MCP23017_INTCONA = const(0x08)
+_MCP23017_IOCON = const(0x0A)
+_MCP23017_GPPUA = const(0x0C)
+_MCP23017_GPPUB = const(0x0D)
+_MCP23017_GPIOA = const(0x12)
+_MCP23017_GPIOB = const(0x13)
+_MCP23017_INTFA = const(0x0E)
+_MCP23017_INTFB = const(0x0F)
+_MCP23017_INTCAPA = const(0x10)
+_MCP23017_INTCAPB = const(0x11)
 
 
 class MCP23017(MCP230XX):
@@ -65,7 +65,7 @@ class MCP23017(MCP230XX):
         # Reset to all inputs with no pull-ups and no inverted polarity.
         self.iodir = 0xFFFF
         self.gppu = 0x0000
-        self.iocon = 0x4   # turn on IRQ Pins as open drain
+        self.iocon = 0x4  # turn on IRQ Pins as open drain
         self._write_u16le(_MCP23017_IPOLA, 0x0000)
 
     @property
@@ -263,7 +263,7 @@ class MCP23017(MCP230XX):
         pins: 8-15
         """
         intfb = self._read_u8(_MCP23017_INTFB)
-        flags = [pin+8 for pin in range(8) if intfb & (1 << pin)]
+        flags = [pin + 8 for pin in range(8) if intfb & (1 << pin)]
         return flags
 
     def clear_ints(self):

@@ -38,8 +38,10 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 def _get_bit(val, bit):
     return val & (1 << bit) > 0
 
+
 def _enable_bit(val, bit):
     return val | (1 << bit)
+
 
 def _clear_bit(val, bit):
     return val & ~(1 << bit)
@@ -63,7 +65,7 @@ class DigitalInOut:
     # with DigitalInout class (which allows specifying pull, etc. which
     # is unused by this class).  Do not remove them, instead turn off pylint
     # in this case.
-    #pylint: disable=unused-argument
+    # pylint: disable=unused-argument
     def switch_to_output(self, value=False, **kwargs):
         """Switch the pin state to a digital output with the provided starting
         value (True/False for high or low, default is False/low).
@@ -78,7 +80,8 @@ class DigitalInOut:
         """
         self.direction = digitalio.Direction.INPUT
         self.pull = pull
-    #pylint: enable=unused-argument
+
+    # pylint: enable=unused-argument
 
     @property
     def value(self):
@@ -111,7 +114,7 @@ class DigitalInOut:
         elif val == digitalio.Direction.OUTPUT:
             self._mcp.iodir = _clear_bit(self._mcp.iodir, self._pin)
         else:
-            raise ValueError('Expected INPUT or OUTPUT direction!')
+            raise ValueError("Expected INPUT or OUTPUT direction!")
 
     @property
     def pull(self):
@@ -130,6 +133,6 @@ class DigitalInOut:
         elif val == digitalio.Pull.UP:
             self._mcp.gppu = _enable_bit(self._mcp.gppu, self._pin)
         elif val == digitalio.Pull.DOWN:
-            raise ValueError('Pull-down resistors are not supported!')
+            raise ValueError("Pull-down resistors are not supported!")
         else:
-            raise ValueError('Expected UP, DOWN, or None for pull state!')
+            raise ValueError("Expected UP, DOWN, or None for pull state!")
