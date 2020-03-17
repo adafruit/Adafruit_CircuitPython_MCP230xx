@@ -11,7 +11,7 @@ mcp = MCP23017(i2c)
 
 # Optionally change the address of the device if you set any of the A0, A1, A2
 # pins.  Specify the new address with a keyword parameter:
-#mcp = MCP23017(i2c, address=0x21)  # MCP23017 w/ A0 set
+# mcp = MCP23017(i2c, address=0x21)  # MCP23017 w/ A0 set
 
 # Make a list of all the port A pins (a.k.a 0-7)
 port_a_pins = []
@@ -33,7 +33,7 @@ for pin in port_b_pins:
     pin.pull = Pull.UP
 
 # Turn on all port A pins for 1/10 of a second
-#while True:
+# while True:
 #    for pin in port_a_pins:
 #        pin.value = True    # turn LED on!
 #        time.sleep(0.1)     # wait 0.1 seconds
@@ -44,6 +44,6 @@ while True:
         if not button.value:
             print("Button #", num, "pressed!")
             # turn on matching port A pin
-            port_a_pins[num].value = True    # turn LED on!
+            port_a_pins[num].value = True  # turn LED on!
         else:
-            port_a_pins[num].value = False    # turn LED off
+            port_a_pins[num].value = False  # turn LED off
