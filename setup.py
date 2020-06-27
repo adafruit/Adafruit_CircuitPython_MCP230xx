@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2017 Tony DiCola for Adafruit Industries
+#
+# SPDX-License-Identifier: MIT
+
 """A setuptools based setup module.
 
 See:
