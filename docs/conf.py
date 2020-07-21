@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2017 Tony DiCola for Adafruit Industries
+#
+# SPDX-License-Identifier: MIT
+
 # -*- coding: utf-8 -*-
 
 import os

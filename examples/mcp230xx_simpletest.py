@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2017 Tony DiCola for Adafruit Industries
+#
+# SPDX-License-Identifier: MIT
+
 # Simple demo of reading and writing the digital I/O of the MCP2300xx as if
 # they were native CircuitPython digital inputs/outputs.
 # Author: Tony DiCola
