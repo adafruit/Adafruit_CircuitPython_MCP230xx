@@ -32,9 +32,13 @@ def _clear_bit(val, bit):
 
 class DigitalInOut:
     """Digital input/output of the MCP230xx.  The interface is exactly the
-    same as the digitalio.DigitalInOut class (however the MCP230xx does not
-    support pull-down resistors and an exception will be thrown
-    attempting to set one).
+    same as the digitalio.DigitalInOut class, however:
+
+      * MCP230xx family does not support pull-down resistors;
+      * MCP23016 does not support pull-up resistors.
+
+    Exceptions will be thrown when attempting to set unsupported pull
+    configurations.
     """
 
     def __init__(self, pin_number, mcp230xx):
@@ -105,17 +109,25 @@ class DigitalInOut:
         value of digitalio.Pull.UP will enable a pull-up resistor, and None will
         disable it.  Pull-down resistors are NOT supported!
         """
-        if _get_bit(self._mcp.gppu, self._pin):
-            return digitalio.Pull.UP
+        try:
+            if _get_bit(self._mcp.gppu, self._pin):
+                return digitalio.Pull.UP
+        except AttributeError:
+            # MCP23016 doesn't have a `gppu` register.
+            raise ValueError("Pull-up/pull-down resistors not supported.")
         return None
 
     @pull.setter
     def pull(self, val):
-        if val is None:
-            self._mcp.gppu = _clear_bit(self._mcp.gppu, self._pin)
-        elif val == digitalio.Pull.UP:
-            self._mcp.gppu = _enable_bit(self._mcp.gppu, self._pin)
-        elif val == digitalio.Pull.DOWN:
-            raise ValueError("Pull-down resistors are not supported!")
-        else:
-            raise ValueError("Expected UP, DOWN, or None for pull state!")
+        try:
+            if val is None:
+                self._mcp.gppu = _clear_bit(self._mcp.gppu, self._pin)
+            elif val == digitalio.Pull.UP:
+                self._mcp.gppu = _enable_bit(self._mcp.gppu, self._pin)
+            elif val == digitalio.Pull.DOWN:
+                raise ValueError("Pull-down resistors are not supported!")
+            else:
+                raise ValueError("Expected UP, DOWN, or None for pull state!")
+        except AttributeError:
+            # MCP23016 doesn't have a `gppu` register.
+            raise ValueError("Pull-up/pull-down resistors not supported.")
