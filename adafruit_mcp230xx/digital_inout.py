@@ -112,9 +112,9 @@ class DigitalInOut:
         try:
             if _get_bit(self._mcp.gppu, self._pin):
                 return digitalio.Pull.UP
-        except AttributeError:
+        except AttributeError as error:
             # MCP23016 doesn't have a `gppu` register.
-            raise ValueError("Pull-up/pull-down resistors not supported.")
+            raise ValueError("Pull-up/pull-down resistors not supported.") from error
         return None
 
     @pull.setter
@@ -128,6 +128,6 @@ class DigitalInOut:
                 raise ValueError("Pull-down resistors are not supported!")
             else:
                 raise ValueError("Expected UP, DOWN, or None for pull state!")
-        except AttributeError:
+        except AttributeError as error:
             # MCP23016 doesn't have a `gppu` register.
-            raise ValueError("Pull-up/pull-down resistors not supported.")
+            raise ValueError("Pull-up/pull-down resistors not supported.") from error

@@ -27,7 +27,6 @@ from .digital_inout import DigitalInOut
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 
-# pylint: disable=bad-whitespace
 _MCP23016_ADDRESS = const(0x20)
 _MCP23016_GPIO0 = const(0x00)
 _MCP23016_GPIO1 = const(0x01)
