@@ -23,6 +23,7 @@ _MCP23017_ADDRESS = const(0x20)
 _MCP23017_IODIRA = const(0x00)
 _MCP23017_IODIRB = const(0x01)
 _MCP23017_IPOLA = const(0x02)
+_MCP23017_IPOL3 = const(0x03)
 _MCP23017_GPINTENA = const(0x04)
 _MCP23017_DEFVALA = const(0x06)
 _MCP23017_INTCONA = const(0x08)
@@ -162,6 +163,42 @@ class MCP23017(MCP230XX):
         assert 0 <= pin <= 15
         return DigitalInOut(pin, self)
 
+    @property
+    def ipol(self):
+        """The raw IPOL output register.  Each bit represents the
+        polarity value of the associated pin (0 = normal, 1 = inverted), assuming that
+        pin has been configured as an input previously.
+        """
+        return self._read_u16le(_MCP23017_IPOLA)
+
+    @ipol.setter
+    def ipol(self, val):
+        self._write_u16le(_MCP23017_IPOLA, val)
+    
+    @property
+    def ipola(self):
+        """The raw IPOL A output register.  Each bit represents the
+        polarity value of the associated pin (0 = normal, 1 = inverted), assuming that
+        pin has been configured as an input previously.
+        """
+        return self._read_u8(_MCP23017_IPOLA)
+
+    @ipol.setter
+    def ipola(self, val):
+        self._write_u8(_MCP23017_IPOLA, val)
+        
+    @property
+    def ipolb(self):
+        """The raw IPOL B output register.  Each bit represents the
+        polarity value of the associated pin (0 = normal, 1 = inverted), assuming that
+        pin has been configured as an input previously.
+        """
+        return self._read_u8(_MCP23017_IPOLB)
+
+    @ipol.setter
+    def ipolb(self, val):
+        self._write_u8(_MCP23017_IPOLB, val)
+    
     @property
     def interrupt_configuration(self):
         """The raw INTCON interrupt control register. The INTCON register
