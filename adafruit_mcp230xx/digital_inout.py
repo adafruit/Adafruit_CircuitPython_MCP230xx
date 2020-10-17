@@ -60,7 +60,7 @@ class DigitalInOut:
         self.direction = digitalio.Direction.OUTPUT
         self.value = value
 
-    def switch_to_input(self, pull=None, invert_polarity=False **kwargs):
+    def switch_to_input(self, pull=None, invert_polarity=False, **kwargs):
         """Switch the pin state to a digital input with the provided starting
         pull-up resistor state (optional, no pull-up by default) and input polarity.  Note that
         pull-down resistors are NOT supported!
