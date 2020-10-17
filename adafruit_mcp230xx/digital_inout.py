@@ -132,7 +132,7 @@ class DigitalInOut:
         except AttributeError as error:
             # MCP23016 doesn't have a `gppu` register.
             raise ValueError("Pull-up/pull-down resistors not supported.") from error
-     
+
     @property
     def invert_polarity(self):
         """The polarity of the pin, either True for an Inverted or
