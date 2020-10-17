@@ -3,6 +3,8 @@
 #
 # SPDX-License-Identifier: MIT
 
+# pylint: disable=too-many-public-methods
+
 """
 `mcp23017`
 ====================================================
@@ -183,7 +185,7 @@ class MCP23017(MCP230XX):
         """
         return self._read_u8(_MCP23017_IPOLA)
 
-    @ipol.setter
+    @ipola.setter
     def ipola(self, val):
         self._write_u8(_MCP23017_IPOLA, val)
 
@@ -195,7 +197,7 @@ class MCP23017(MCP230XX):
         """
         return self._read_u8(_MCP23017_IPOLB)
 
-    @ipol.setter
+    @ipolb.setter
     def ipolb(self, val):
         self._write_u8(_MCP23017_IPOLB, val)
 
