@@ -60,13 +60,14 @@ class DigitalInOut:
         self.direction = digitalio.Direction.OUTPUT
         self.value = value
 
-    def switch_to_input(self, pull=None, **kwargs):
+    def switch_to_input(self, pull=None, invert_polarity=False, **kwargs):
         """Switch the pin state to a digital input with the provided starting
-        pull-up resistor state (optional, no pull-up by default).  Note that
+        pull-up resistor state (optional, no pull-up by default) and input polarity.  Note that
         pull-down resistors are NOT supported!
         """
         self.direction = digitalio.Direction.INPUT
         self.pull = pull
+        self.invert_polarity = invert_polarity
 
     # pylint: enable=unused-argument
 
@@ -131,3 +132,19 @@ class DigitalInOut:
         except AttributeError as error:
             # MCP23016 doesn't have a `gppu` register.
             raise ValueError("Pull-up/pull-down resistors not supported.") from error
+
+    @property
+    def invert_polarity(self):
+        """The polarity of the pin, either True for an Inverted or
+        False for an normal.
+        """
+        if _get_bit(self._mcp.ipol, self._pin):
+            return True
+        return False
+
+    @invert_polarity.setter
+    def invert_polarity(self, val):
+        if val:
+            self._mcp.ipol = _enable_bit(self._mcp.ipol, self._pin)
+        else:
+            self._mcp.ipol = _clear_bit(self._mcp.ipol, self._pin)
