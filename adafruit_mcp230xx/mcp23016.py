@@ -45,12 +45,13 @@ class MCP23016(MCP230XX):
     at the specified I2C address.
     """
 
-    def __init__(self, i2c, address=_MCP23016_ADDRESS):
+    def __init__(self, i2c, address=_MCP23016_ADDRESS, reset=True):
         super().__init__(i2c, address)
 
-        # Reset to all inputs and no inverted polarity.
-        self.iodir = 0xFFFF
-        self._write_u16le(_MCP23016_IPOL0, 0x0000)
+        if reset:
+            # Reset to all inputs and no inverted polarity.
+            self.iodir = 0xFFFF
+            self._write_u16le(_MCP23016_IPOL0, 0x0000)
 
     @property
     def gpio(self):
