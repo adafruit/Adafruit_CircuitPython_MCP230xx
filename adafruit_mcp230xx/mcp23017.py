@@ -288,6 +288,31 @@ class MCP23017(MCP230XX):
         flags = [pin + 8 for pin in range(8) if intfb & (1 << pin)]
         return flags
 
+    @property
+    def int_cap(self):
+        """Returns a list with the pin values at time of interrupt
+        port A ----> pins 0-7
+        port B ----> pins 8-15
+        """
+        intcap = self._read_u16le(_MCP23017_INTCAPA)
+        return [(intcap >> pin) & 1 for pin in range(16)]
+
+    @property
+    def int_capa(self):
+        """Returns a list of pin values at time of interrupt
+        pins: 0-7
+        """
+        intcapa = self._read_u8(_MCP23017_INTCAPA)
+        return [(intcapa >> pin) & 1 for pin in range(8)]
+
+    @property
+    def int_capb(self):
+        """Returns a list of pin values at time of interrupt
+        pins: 8-15
+        """
+        intcapb = self._read_u8(_MCP23017_INTCAPB)
+        return [(intcapb >> pin) & 1 for pin in range(8)]
+
     def clear_ints(self):
         """Clears interrupts by reading INTCAP."""
         self._read_u16le(_MCP23017_INTCAPA)
