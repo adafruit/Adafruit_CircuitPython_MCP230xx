@@ -85,5 +85,6 @@ class MCP23008(MCP230XX):
         """Convenience function to create an instance of the DigitalInOut class
         pointing at the specified pin of this MCP23008 device.
         """
-        assert 0 <= pin <= 7
+        if not 0 <= pin <= 7:
+            raise ValueError("Pin number must be 0-7.")
         return DigitalInOut(pin, self)
