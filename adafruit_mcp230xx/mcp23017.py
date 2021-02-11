@@ -163,7 +163,8 @@ class MCP23017(MCP230XX):
         """Convenience function to create an instance of the DigitalInOut class
         pointing at the specified pin of this MCP23017 device.
         """
-        assert 0 <= pin <= 15
+        if not 0 <= pin <= 15:
+            raise ValueError("Pin number must be 0-15.")
         return DigitalInOut(pin, self)
 
     @property
