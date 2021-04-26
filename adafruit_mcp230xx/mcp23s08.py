@@ -37,8 +37,8 @@ class MCP23S08(MCP23SXX):
     at the specified I2C address.
     """
 
-    def __init__(self, spi, cs, address=_MCP23S08_ADDRESS, reset=True):
-        super().__init__(spi, address, cs)
+    def __init__(self, spi, chip_select, address=_MCP23S08_ADDRESS, reset=True):
+        super().__init__(spi, address, chip_select)
         # For user information
         self.address = address
         if reset:

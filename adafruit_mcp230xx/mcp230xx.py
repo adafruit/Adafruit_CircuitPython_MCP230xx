@@ -30,10 +30,12 @@ class MCP230XX(MCP23XXX):
     def _read_u16le(self, register):
         # Read an unsigned 16 bit little endian value from the specified 8-bit
         # register.
-        with self._device as device_bus:
+        with self._device as bus_device:
             _BUFFER[0] = register & 0xFF
 
-            bus_device.write_then_readinto(_BUFFER, _BUFFER, out_end=1, in_start=1, in_end=3)
+            bus_device.write_then_readinto(
+                _BUFFER, _BUFFER, out_end=1, in_start=1, in_end=3
+            )
             return (_BUFFER[2] << 8) | _BUFFER[1]
 
     def _write_u16le(self, register, val):
@@ -50,7 +52,9 @@ class MCP230XX(MCP23XXX):
         with self._device as bus_device:
             _BUFFER[0] = register & 0xFF
 
-            bus_device.write_then_readinto(_BUFFER, _BUFFER, out_end=1, in_start=1, in_end=2)
+            bus_device.write_then_readinto(
+                _BUFFER, _BUFFER, out_end=1, in_start=1, in_end=2
+            )
             return _BUFFER[1]
 
     def _write_u8(self, register, val):

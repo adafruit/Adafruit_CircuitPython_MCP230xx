@@ -42,8 +42,8 @@ class MCP23S17(MCP23SXX):
     at the specified SPI address.
     """
 
-    def __init__(self, spi, cs, address=_MCP23S17_ADDRESS, reset=True):
-        super().__init__(spi, address, cs)
+    def __init__(self, spi, chip_select, address=_MCP23S17_ADDRESS, reset=True):
+        super().__init__(spi, address, chip_select)
         # For user information
         self.address = address
         if reset:
@@ -52,7 +52,6 @@ class MCP23S17(MCP23SXX):
             self.gppu = 0x0000
             self.iocon = 0x4  # turn on IRQ Pins as open drain
             self._write_u16le(_MCP23S17_IPOLA, 0x0000)
-
 
     @property
     def gpio(self):

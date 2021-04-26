@@ -21,7 +21,7 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 # shared between both the MCP23008 and MCP23017 class to reduce memory allocations.
 # However this is explicitly not thread safe or re-entrant by design!
 _BUFFER = bytearray(3)
-MCP23SXX_CODE_READ  = 0x41
+MCP23SXX_CODE_READ = 0x41
 MCP23SXX_CODE_WRITE = 0x40
 
 
@@ -29,8 +29,8 @@ MCP23SXX_CODE_WRITE = 0x40
 class MCP23XXX:
     """Base class for MCP230xx devices."""
 
-    def __init__(self, bus_device, address, cs=None):
-        if cs==None:
+    def __init__(self, bus_device, address, chip_select=None):
+        if chip_select is None:
             self._device = i2c_device.I2CDevice(bus_device, address)
         else:
-            self._device = spi_device.SPIDevice(bus_device, cs)
+            self._device = spi_device.SPIDevice(bus_device, chip_select)
