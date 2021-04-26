@@ -9,16 +9,15 @@
 
 CircuitPython module for the MCP23S17 SPI I/O extenders.
 
-* Author(s): Tony DiCola
-* Contributor (s): Romy Bompart (2020)
+* Author(s): Tony DiCola, Romy Bompart (2020), Red_M (2021)
 """
 
 from micropython import const
 from .mcp23sxx import MCP23SXX
 from .digital_inout import DigitalInOut
 
-__version__ = ""
-__repo__ = ""
+__version__ = "0.0.0-auto.0"
+__repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 
 _MCP23S17_ADDRESS = const(0x20)
 _MCP23S17_IODIRA = const(0x00)
@@ -43,18 +42,17 @@ class MCP23S17(MCP23SXX):
     at the specified SPI address.
     """
 
-    def __init__(self, spi = None, cs = None , address=_MCP23S17_ADDRESS):
-        super().__init__(spi, cs, address)
+    def __init__(self, spi, cs, address=_MCP23S17_ADDRESS, reset=True):
+        super().__init__(spi, address, cs)
         # For user information
         self.address = address
-        # turn on IRQ Pins as open drain and enables HAEN
-        self.iocon = 0x08  
-        self.io_control = self.iocon
-        # Reset to all inputs with no pull-ups and no inverted polarity.
-        self.iodir = 0xFFFF
-        self.gppu = 0x0000
-        self._write_u16le(_MCP23S17_IPOLA, 0x0000 )
-        
+        if reset:
+            # Reset to all inputs with no pull-ups and no inverted polarity.
+            self.iodir = 0xFFFF
+            self.gppu = 0x0000
+            self.iocon = 0x4  # turn on IRQ Pins as open drain
+            self._write_u16le(_MCP23S17_IPOLA, 0x0000)
+
 
     @property
     def gpio(self):

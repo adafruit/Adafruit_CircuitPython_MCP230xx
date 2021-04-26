@@ -12,7 +12,7 @@ CircuitPython module for the MCP23017 and MCP23008 I2C I/O extenders.
 * Author(s): Tony DiCola
 """
 
-from adafruit_bus_device import i2c_device
+from .mcp23xxx import MCP23XXX
 
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
@@ -24,41 +24,38 @@ _BUFFER = bytearray(3)
 
 
 # pylint: disable=too-few-public-methods
-class MCP230XX:
+class MCP230XX(MCP23XXX):
     """Base class for MCP230xx devices."""
-
-    def __init__(self, i2c, address):
-        self._device = i2c_device.I2CDevice(i2c, address)
 
     def _read_u16le(self, register):
         # Read an unsigned 16 bit little endian value from the specified 8-bit
         # register.
-        with self._device as i2c:
+        with self._device as device_bus:
             _BUFFER[0] = register & 0xFF
 
-            i2c.write_then_readinto(_BUFFER, _BUFFER, out_end=1, in_start=1, in_end=3)
+            bus_device.write_then_readinto(_BUFFER, _BUFFER, out_end=1, in_start=1, in_end=3)
             return (_BUFFER[2] << 8) | _BUFFER[1]
 
     def _write_u16le(self, register, val):
         # Write an unsigned 16 bit little endian value to the specified 8-bit
         # register.
-        with self._device as i2c:
+        with self._device as bus_device:
             _BUFFER[0] = register & 0xFF
             _BUFFER[1] = val & 0xFF
             _BUFFER[2] = (val >> 8) & 0xFF
-            i2c.write(_BUFFER, end=3)
+            bus_device.write(_BUFFER, end=3)
 
     def _read_u8(self, register):
         # Read an unsigned 8 bit value from the specified 8-bit register.
-        with self._device as i2c:
+        with self._device as bus_device:
             _BUFFER[0] = register & 0xFF
 
-            i2c.write_then_readinto(_BUFFER, _BUFFER, out_end=1, in_start=1, in_end=2)
+            bus_device.write_then_readinto(_BUFFER, _BUFFER, out_end=1, in_start=1, in_end=2)
             return _BUFFER[1]
 
     def _write_u8(self, register, val):
         # Write an 8 bit value to the specified 8-bit register.
-        with self._device as i2c:
+        with self._device as bus_device:
             _BUFFER[0] = register & 0xFF
             _BUFFER[1] = val & 0xFF
-            i2c.write(_BUFFER, end=2)
+            bus_device.write(_BUFFER, end=2)
