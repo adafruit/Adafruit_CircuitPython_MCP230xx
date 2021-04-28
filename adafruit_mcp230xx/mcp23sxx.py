@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: MIT
 
 """
-`mcp23Sxx`
+`mcp23sxx`
 ====================================================
 
 CircuitPython module for the MCP23S17 SPI I/O extenders.

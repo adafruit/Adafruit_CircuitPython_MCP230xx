@@ -14,7 +14,7 @@ CircuitPython module for the MCP23S08 I2C I/O extenders.
 """
 
 from micropython import const
-from .MCP23Sxx import MCP23SXX
+from .mcp23sxx import MCP23SXX
 from .digital_inout import DigitalInOut
 
 __version__ = "0.0.0-auto.0"
