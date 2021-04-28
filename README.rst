@@ -13,7 +13,7 @@ Introduction
     :target: https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx/actions/
     :alt: Build Status
 
-CircuitPython module for the MCP23017 and MCP23008 I2C I/O extenders.
+CircuitPython module for the MCP23017 and MCP23008 I2C I/O extenders. Also supports the MCP23S17 and MCP23S08 SPI I/O extenders as well, which are the same chip but over SPI.
 
 Dependencies
 =============
