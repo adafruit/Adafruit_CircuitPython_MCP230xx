@@ -13,5 +13,14 @@
 .. automodule:: adafruit_mcp230xx.mcp23017
    :members:
 
+.. automodule:: adafruit_mcp230xx.mcp23Sxx
+   :members:
+
+.. automodule:: adafruit_mcp230xx.mcp23S08
+   :members:
+
+.. automodule:: adafruit_mcp230xx.mcp23S17
+   :members:
+
 .. automodule:: adafruit_mcp230xx.digital_inout
    :members:
