@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: 2017 Tony DiCola for Adafruit Industries
 # SPDX-FileCopyrightText: 2019 Carter Nelson
+# SPDX-FileCopyrightText: 2021 Red_M
 #
 # SPDX-License-Identifier: MIT
 
@@ -9,7 +10,7 @@
 
 CircuitPython module for the MCP23S08 I2C I/O extenders.
 
-* Author(s): Tony DiCola
+* Author(s): Tony DiCola, Romy Bompart (2020), Red_M (2021)
 """
 
 from micropython import const

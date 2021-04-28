@@ -1,5 +1,4 @@
-# SPDX-FileCopyrightText: 2017 Tony DiCola for Adafruit Industries
-# SPDX-FileCopyrightText: 2019 Carter Nelson
+# SPDX-FileCopyrightText: 2021 Red_M
 #
 # SPDX-License-Identifier: MIT
 
@@ -9,7 +8,7 @@
 
 CircuitPython module for the MCP23017, MCP23008 I2C and MCP23S17, MCP23S08 SPI I/O extenders.
 
-* Author(s): Tony DiCola, Romy Bompart (2020), Red_M (2021)
+* Author(s): Red_M
 """
 
 from adafruit_bus_device import i2c_device, spi_device
