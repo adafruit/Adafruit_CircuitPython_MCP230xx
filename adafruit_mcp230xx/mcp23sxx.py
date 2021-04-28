@@ -29,10 +29,10 @@ MCP23SXX_CODE_WRITE = 0x40
 class MCP23SXX(MCP23XXX):
     """Base class for MCP23Sxx devices."""
 
-    def __init__(self, spi, address, chip_select):
+    def __init__(self, spi, address, chip_select, baudrate=100000):
         self.cmd_write = MCP23SXX_CODE_WRITE | (address << 1)
         self.cmd_read = MCP23SXX_CODE_READ | (address << 1)
-        super().__init__(spi, address, chip_select)
+        super().__init__(spi, address, chip_select, baudrate=baudrate)
 
     def _read_u16le(self, register):
         # Read an unsigned 16 bit little endian value from the specified 8-bit

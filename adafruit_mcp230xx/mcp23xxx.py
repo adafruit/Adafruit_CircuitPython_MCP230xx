@@ -19,10 +19,12 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 
 # pylint: disable=too-few-public-methods
 class MCP23XXX:
-    """Base class for MCP230xx devices."""
+    """Base class for MCP23xxx devices."""
 
-    def __init__(self, bus_device, address, chip_select=None):
+    def __init__(self, bus_device, address, chip_select=None, baudrate=100000):
         if chip_select is None:
             self._device = i2c_device.I2CDevice(bus_device, address)
         else:
-            self._device = spi_device.SPIDevice(bus_device, chip_select)
+            self._device = spi_device.SPIDevice(
+                bus_device, chip_select, baudrate=baudrate
+            )

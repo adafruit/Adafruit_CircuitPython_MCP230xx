@@ -36,14 +36,16 @@ _MCP23S17_INTFB = const(0x0F)
 _MCP23S17_INTCAPA = const(0x10)
 _MCP23S17_INTCAPB = const(0x11)
 
-
+# pylint: disable=too-many-arguments
 class MCP23S17(MCP23SXX):
     """Supports MCP23S17 instance on specified SPI bus and optionally
     at the specified SPI address.
     """
 
-    def __init__(self, spi, chip_select, address=_MCP23S17_ADDRESS, reset=True):
-        super().__init__(spi, address, chip_select)
+    def __init__(
+        self, spi, chip_select, address=_MCP23S17_ADDRESS, reset=True, baudrate=100000
+    ):
+        super().__init__(spi, address, chip_select, baudrate=baudrate)
         # For user information
         self.address = address
         if reset:

@@ -31,14 +31,16 @@ _MCP23S08_INTF = const(0x07)
 _MCP23S08_INTCAP = const(0x08)
 _MCP23S08_GPIO = const(0x09)
 
-
+# pylint: disable=too-many-arguments
 class MCP23S08(MCP23SXX):
     """Supports MCP23S08 instance on specified I2C bus and optionally
     at the specified I2C address.
     """
 
-    def __init__(self, spi, chip_select, address=_MCP23S08_ADDRESS, reset=True):
-        super().__init__(spi, address, chip_select)
+    def __init__(
+        self, spi, chip_select, address=_MCP23S08_ADDRESS, reset=True, baudrate=100000
+    ):
+        super().__init__(spi, address, chip_select, baudrate=baudrate)
         # For user information
         self.address = address
         if reset:
