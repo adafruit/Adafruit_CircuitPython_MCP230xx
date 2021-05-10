@@ -24,6 +24,7 @@ _MCP23S17_ADDRESS = const(0x20)
 _MCP23S17_IODIRA = const(0x00)
 _MCP23S17_IODIRB = const(0x01)
 _MCP23S17_IPOLA = const(0x02)
+_MCP23S17_IPOLB = const(0x03)
 _MCP23S17_GPINTENA = const(0x04)
 _MCP23S17_DEFVALA = const(0x06)
 _MCP23S17_INTCONA = const(0x08)
@@ -38,6 +39,7 @@ _MCP23S17_INTCAPA = const(0x10)
 _MCP23S17_INTCAPB = const(0x11)
 
 # pylint: disable=too-many-arguments
+# pylint: disable=too-many-public-methods
 class MCP23S17(MCP23SXX):
     """Supports MCP23S17 instance on specified SPI bus and optionally
     at the specified SPI address.
@@ -165,8 +167,45 @@ class MCP23S17(MCP23SXX):
         """Convenience function to create an instance of the DigitalInOut class
         pointing at the specified pin of this MCP23S17 device.
         """
-        assert 0 <= pin <= 15
+        if not 0 <= pin <= 15:
+            raise ValueError("Pin number must be 0-15.")
         return DigitalInOut(pin, self)
+
+    @property
+    def ipol(self):
+        """The raw IPOL output register.  Each bit represents the
+        polarity value of the associated pin (0 = normal, 1 = inverted), assuming that
+        pin has been configured as an input previously.
+        """
+        return self._read_u16le(_MCP23S17_IPOLA)
+
+    @ipol.setter
+    def ipol(self, val):
+        self._write_u16le(_MCP23S17_IPOLA, val)
+
+    @property
+    def ipola(self):
+        """The raw IPOL A output register.  Each bit represents the
+        polarity value of the associated pin (0 = normal, 1 = inverted), assuming that
+        pin has been configured as an input previously.
+        """
+        return self._read_u8(_MCP23S17_IPOLA)
+
+    @ipola.setter
+    def ipola(self, val):
+        self._write_u8(_MCP23S17_IPOLA, val)
+
+    @property
+    def ipolb(self):
+        """The raw IPOL B output register.  Each bit represents the
+        polarity value of the associated pin (0 = normal, 1 = inverted), assuming that
+        pin has been configured as an input previously.
+        """
+        return self._read_u8(_MCP23S17_IPOLB)
+
+    @ipolb.setter
+    def ipolb(self, val):
+        self._write_u8(_MCP23S17_IPOLB, val)
 
     @property
     def interrupt_configuration(self):
