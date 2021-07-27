@@ -263,6 +263,8 @@ class MCP23S17(MCP23SXX):
 
     @io_control.setter
     def io_control(self, val):
+        val |= 0b000001
+        val ^= 0b000001
         self._write_u8(_MCP23S17_IOCON, val)
 
     @property
