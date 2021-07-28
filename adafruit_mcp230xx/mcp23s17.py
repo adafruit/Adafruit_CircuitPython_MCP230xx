@@ -257,7 +257,7 @@ class MCP23S17(MCP23SXX):
         Bit 4 is whether SDA slew rate is enabled (1 = yes). Bit 5 is if SPI
         address pointer auto-increments (1 = no). Bit 6 is whether interrupt
         pins are internally connected (1 = yes). Bit 7 is whether registers
-        are all in one bank (1 = no).
+        are all in one bank (1 = no), this is silently ignored if set to `1`.
         """
         return self._read_u8(_MCP23S17_IOCON)
 
