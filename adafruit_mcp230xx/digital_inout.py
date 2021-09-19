@@ -66,8 +66,12 @@ class DigitalInOut:
         pull-down resistors are NOT supported!
         """
         self.direction = digitalio.Direction.INPUT
-        self.pull = pull
         self.invert_polarity = invert_polarity
+        try:
+            self.pull = pull
+        except ValueError:
+            #Catch the error that is thrown if no GPPU register exists
+            pass
 
     # pylint: enable=unused-argument
 
