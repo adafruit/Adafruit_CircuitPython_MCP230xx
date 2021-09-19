@@ -49,8 +49,14 @@ class PCA9554(MCP230XX):
         logic level of the pins, regardless of whether they are set as an input
         or an output. Each bit represents the output value of the associated pin 
         (0 = low, 1 = high).
+        
+        Note: Based on the errata in the datasheet, the command byte must be changed
+        to something other than 0x00 after reading from address 0x00 (the input register).
+        Not doing this will cause the interrup pin to not operate correctly.
         """
-        return self._read_u8(_PCA9554_INPUT)
+        InputState = self._read_u8(_PCA9554_INPUT)
+        self._read_u8(_PCA9554_OUTPUT) #Change command byte to 0x01
+        return InputState
 
     @gpio.setter
     def gpio(self, val):
