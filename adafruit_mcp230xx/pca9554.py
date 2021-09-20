@@ -24,7 +24,7 @@ from .digital_inout import DigitalInOut
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 
-_PCA9554_ADDRESS = const(0x27)		#TODO: this will probably change based on the device used. Not sure how to deal with this. Maybe remove the default and force the user to specify the address?
+_PCA9554_ADDRESS = const(0x27)
 
 _PCA9554_INPUT = const(0x00)	#Input register
 _PCA9554_OUTPUT = const(0x01)	#Output register
