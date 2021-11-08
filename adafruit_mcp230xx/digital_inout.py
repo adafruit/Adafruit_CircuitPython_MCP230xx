@@ -16,7 +16,7 @@ import digitalio
 
 try:
     import typing  # pylint: disable=unused-import
-    from adafruit_mcp230xx.mcp230xx import MCP230XX
+    from adafruit_mcp230xx.mcp23xxx import MCP23XXX
     from digitalio import Pull, Direction
 except ImportError:
     pass
@@ -48,7 +48,7 @@ class DigitalInOut:
     configurations.
     """
 
-    def __init__(self, pin_number: int, mcp230xx: MCP230XX):
+    def __init__(self, pin_number: int, mcp230xx: MCP23XXX):
         """Specify the pin number of the MCP230xx (0...7 for MCP23008, or 0...15
         for MCP23017) and MCP23008 instance.
         """
