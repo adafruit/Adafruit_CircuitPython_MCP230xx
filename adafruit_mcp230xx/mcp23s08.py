@@ -17,6 +17,13 @@ from micropython import const
 from .mcp23sxx import MCP23SXX
 from .digital_inout import DigitalInOut
 
+try:
+    import typing # pylint: disable=unused-import
+    from busio import SPI
+    import digitalio
+except ImportError:
+    pass
+
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP23Sxx.git"
 
@@ -39,7 +46,7 @@ class MCP23S08(MCP23SXX):
     """
 
     def __init__(
-        self, spi, chip_select, address=_MCP23S08_ADDRESS, reset=True, baudrate=100000
+        self, spi: SPI, chip_select: digitalio.DigitalInOut, address: int = _MCP23S08_ADDRESS, reset: bool = True, baudrate: int = 100000
     ):
         super().__init__(spi, address, chip_select, baudrate=baudrate)
         # For user information
@@ -59,7 +66,7 @@ class MCP23S08(MCP23SXX):
         return self._read_u8(_MCP23S08_GPIO)
 
     @gpio.setter
-    def gpio(self, val):
+    def gpio(self, val: int):
         self._write_u8(_MCP23S08_GPIO, val)
 
     @property
@@ -70,7 +77,7 @@ class MCP23S08(MCP23SXX):
         return self._read_u8(_MCP23S08_IODIR)
 
     @iodir.setter
-    def iodir(self, val):
+    def iodir(self, val: int):
         self._write_u8(_MCP23S08_IODIR, val)
 
     @property
@@ -82,10 +89,10 @@ class MCP23S08(MCP23SXX):
         return self._read_u8(_MCP23S08_GPPU)
 
     @gppu.setter
-    def gppu(self, val):
+    def gppu(self, val: int):
         self._write_u8(_MCP23S08_GPPU, val)
 
-    def get_pin(self, pin):
+    def get_pin(self, pin: int) -> DigitalInOut:
         """Convenience function to create an instance of the DigitalInOut class
         pointing at the specified pin of this MCP23S08 device.
         """

@@ -16,6 +16,12 @@ from micropython import const
 from .mcp230xx import MCP230XX
 from .digital_inout import DigitalInOut
 
+try:
+    import typing # pylint: disable=unused-import
+    from busio import I2C
+except ImportError:
+    pass
+
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 
@@ -37,7 +43,7 @@ class MCP23008(MCP230XX):
     at the specified I2C address.
     """
 
-    def __init__(self, i2c, address=_MCP23008_ADDRESS, reset=True):
+    def __init__(self, i2c: I2C, address: int = _MCP23008_ADDRESS, reset: bool = True):
         super().__init__(i2c, address)
 
         if reset:
@@ -55,7 +61,7 @@ class MCP23008(MCP230XX):
         return self._read_u8(_MCP23008_GPIO)
 
     @gpio.setter
-    def gpio(self, val):
+    def gpio(self, val: int):
         self._write_u8(_MCP23008_GPIO, val)
 
     @property
@@ -66,7 +72,7 @@ class MCP23008(MCP230XX):
         return self._read_u8(_MCP23008_IODIR)
 
     @iodir.setter
-    def iodir(self, val):
+    def iodir(self, val: int):
         self._write_u8(_MCP23008_IODIR, val)
 
     @property
@@ -78,10 +84,10 @@ class MCP23008(MCP230XX):
         return self._read_u8(_MCP23008_GPPU)
 
     @gppu.setter
-    def gppu(self, val):
+    def gppu(self, val: int):
         self._write_u8(_MCP23008_GPPU, val)
 
-    def get_pin(self, pin):
+    def get_pin(self, pin: int) -> DigitalInOut:
         """Convenience function to create an instance of the DigitalInOut class
         pointing at the specified pin of this MCP23008 device.
         """

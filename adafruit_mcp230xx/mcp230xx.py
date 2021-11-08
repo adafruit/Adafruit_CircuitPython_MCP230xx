@@ -28,7 +28,7 @@ _BUFFER = bytearray(3)
 class MCP230XX(MCP23XXX):
     """Base class for MCP230xx devices."""
 
-    def _read_u16le(self, register):
+    def _read_u16le(self, register: int) -> int:
         # Read an unsigned 16 bit little endian value from the specified 8-bit
         # register.
         with self._device as bus_device:
@@ -39,7 +39,7 @@ class MCP230XX(MCP23XXX):
             )
             return (_BUFFER[2] << 8) | _BUFFER[1]
 
-    def _write_u16le(self, register, val):
+    def _write_u16le(self, register: int, val: int):
         # Write an unsigned 16 bit little endian value to the specified 8-bit
         # register.
         with self._device as bus_device:
@@ -48,7 +48,7 @@ class MCP230XX(MCP23XXX):
             _BUFFER[2] = (val >> 8) & 0xFF
             bus_device.write(_BUFFER, end=3)
 
-    def _read_u8(self, register):
+    def _read_u8(self, register: int):
         # Read an unsigned 8 bit value from the specified 8-bit register.
         with self._device as bus_device:
             _BUFFER[0] = register & 0xFF
@@ -58,7 +58,7 @@ class MCP230XX(MCP23XXX):
             )
             return _BUFFER[1]
 
-    def _write_u8(self, register, val):
+    def _write_u8(self, register: int, val: int):
         # Write an 8 bit value to the specified 8-bit register.
         with self._device as bus_device:
             _BUFFER[0] = register & 0xFF

@@ -17,6 +17,13 @@ from micropython import const
 from .mcp23sxx import MCP23SXX
 from .digital_inout import DigitalInOut
 
+try:
+    import typing # pylint: disable=unused-import
+    from busio import SPI
+    import digitalio
+except ImportError:
+    pass
+
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 
@@ -46,7 +53,7 @@ class MCP23S17(MCP23SXX):
     """
 
     def __init__(
-        self, spi, chip_select, address=_MCP23S17_ADDRESS, reset=True, baudrate=100000
+        self, spi: SPI, chip_select: digitalio.DigitalInOut, address: int = _MCP23S17_ADDRESS, reset: bool = True, baudrate: int = 100000
     ):
         super().__init__(spi, address, chip_select, baudrate=baudrate)
         # For user information
@@ -67,7 +74,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u16le(_MCP23S17_GPIOA)
 
     @gpio.setter
-    def gpio(self, val):
+    def gpio(self, val: int) :
         self._write_u16le(_MCP23S17_GPIOA, val)
 
     @property
@@ -79,7 +86,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_GPIOA)
 
     @gpioa.setter
-    def gpioa(self, val):
+    def gpioa(self, val: int):
         self._write_u8(_MCP23S17_GPIOA, val)
 
     @property
@@ -91,7 +98,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_GPIOB)
 
     @gpiob.setter
-    def gpiob(self, val):
+    def gpiob(self, val: int):
         self._write_u8(_MCP23S17_GPIOB, val)
 
     @property
@@ -102,7 +109,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u16le(_MCP23S17_IODIRA)
 
     @iodir.setter
-    def iodir(self, val):
+    def iodir(self, val: int):
         self._write_u16le(_MCP23S17_IODIRA, val)
 
     @property
@@ -113,7 +120,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_IODIRA)
 
     @iodira.setter
-    def iodira(self, val):
+    def iodira(self, val: int):
         self._write_u8(_MCP23S17_IODIRA, val)
 
     @property
@@ -124,7 +131,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_IODIRB)
 
     @iodirb.setter
-    def iodirb(self, val):
+    def iodirb(self, val: int):
         self._write_u8(_MCP23S17_IODIRB, val)
 
     @property
@@ -136,7 +143,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u16le(_MCP23S17_GPPUA)
 
     @gppu.setter
-    def gppu(self, val):
+    def gppu(self, val: int):
         self._write_u16le(_MCP23S17_GPPUA, val)
 
     @property
@@ -148,7 +155,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_GPPUA)
 
     @gppua.setter
-    def gppua(self, val):
+    def gppua(self, val: int):
         self._write_u8(_MCP23S17_GPPUA, val)
 
     @property
@@ -160,10 +167,10 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_GPPUB)
 
     @gppub.setter
-    def gppub(self, val):
+    def gppub(self, val: int):
         self._write_u8(_MCP23S17_GPPUB, val)
 
-    def get_pin(self, pin):
+    def get_pin(self, pin: int) -> DigitalInOut:
         """Convenience function to create an instance of the DigitalInOut class
         pointing at the specified pin of this MCP23S17 device.
         """
@@ -180,7 +187,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u16le(_MCP23S17_IPOLA)
 
     @ipol.setter
-    def ipol(self, val):
+    def ipol(self, val: int):
         self._write_u16le(_MCP23S17_IPOLA, val)
 
     @property
@@ -192,7 +199,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_IPOLA)
 
     @ipola.setter
-    def ipola(self, val):
+    def ipola(self, val: int):
         self._write_u8(_MCP23S17_IPOLA, val)
 
     @property
@@ -204,7 +211,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_IPOLB)
 
     @ipolb.setter
-    def ipolb(self, val):
+    def ipolb(self, val: int):
         self._write_u8(_MCP23S17_IPOLB, val)
 
     @property
@@ -219,7 +226,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u16le(_MCP23S17_INTCONA)
 
     @interrupt_configuration.setter
-    def interrupt_configuration(self, val):
+    def interrupt_configuration(self, val: int):
         self._write_u16le(_MCP23S17_INTCONA, val)
 
     @property
@@ -233,7 +240,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u16le(_MCP23S17_GPINTENA)
 
     @interrupt_enable.setter
-    def interrupt_enable(self, val):
+    def interrupt_enable(self, val: int):
         self._write_u16le(_MCP23S17_GPINTENA, val)
 
     @property
@@ -246,7 +253,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u16le(_MCP23S17_DEFVALA)
 
     @default_value.setter
-    def default_value(self, val):
+    def default_value(self, val: int):
         self._write_u16le(_MCP23S17_DEFVALA, val)
 
     @property
@@ -262,7 +269,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_IOCON)
 
     @io_control.setter
-    def io_control(self, val):
+    def io_control(self, val: int):
         val &= ~0x80
         self._write_u8(_MCP23S17_IOCON, val)
 
