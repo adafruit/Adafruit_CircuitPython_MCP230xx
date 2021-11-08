@@ -18,7 +18,7 @@ from .mcp23sxx import MCP23SXX
 from .digital_inout import DigitalInOut
 
 try:
-    import typing # pylint: disable=unused-import
+    import typing  # pylint: disable=unused-import
     from busio import SPI
     import digitalio
 except ImportError:
@@ -53,7 +53,12 @@ class MCP23S17(MCP23SXX):
     """
 
     def __init__(
-        self, spi: SPI, chip_select: digitalio.DigitalInOut, address: int = _MCP23S17_ADDRESS, reset: bool = True, baudrate: int = 100000
+        self,
+        spi: SPI,
+        chip_select: digitalio.DigitalInOut,
+        address: int = _MCP23S17_ADDRESS,
+        reset: bool = True,
+        baudrate: int = 100000,
     ):
         super().__init__(spi, address, chip_select, baudrate=baudrate)
         # For user information
@@ -74,7 +79,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u16le(_MCP23S17_GPIOA)
 
     @gpio.setter
-    def gpio(self, val: int) :
+    def gpio(self, val: int):
         self._write_u16le(_MCP23S17_GPIOA, val)
 
     @property

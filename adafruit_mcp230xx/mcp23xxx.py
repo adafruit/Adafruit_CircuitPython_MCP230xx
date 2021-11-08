@@ -27,7 +27,13 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 class MCP23XXX:
     """Base class for MCP23xxx devices."""
 
-    def __init__(self, bus_device: Union[I2C, SPI], address: int, chip_select: Optional[digitalio.DigitalInOut] = None, baudrate: int = 100000):
+    def __init__(
+        self,
+        bus_device: Union[I2C, SPI],
+        address: int,
+        chip_select: Optional[digitalio.DigitalInOut] = None,
+        baudrate: int = 100000,
+    ):
         if chip_select is None:
             self._device = i2c_device.I2CDevice(bus_device, address)
         else:

@@ -16,7 +16,7 @@ CircuitPython module for the MCP23S17 SPI I/O extenders.
 from .mcp23xxx import MCP23XXX
 
 try:
-    import typing # pylint: disable=unused-import
+    import typing  # pylint: disable=unused-import
     from busio import SPI
     import digitalio
 except ImportError:
@@ -37,7 +37,13 @@ MCP23SXX_CODE_WRITE = 0x40
 class MCP23SXX(MCP23XXX):
     """Base class for MCP23Sxx devices."""
 
-    def __init__(self, spi: SPI, address: int, chip_select: digitalio.DigitalInOut, baudrate: int = 100000):
+    def __init__(
+        self,
+        spi: SPI,
+        address: int,
+        chip_select: digitalio.DigitalInOut,
+        baudrate: int = 100000,
+    ):
         self.cmd_write = MCP23SXX_CODE_WRITE | (address << 1)
         self.cmd_read = MCP23SXX_CODE_READ | (address << 1)
         super().__init__(spi, address, chip_select, baudrate=baudrate)

@@ -15,7 +15,7 @@ Digital input/output of the MCP230xx.
 import digitalio
 
 try:
-    import typing # pylint: disable=unused-import
+    import typing  # pylint: disable=unused-import
     from adafruit_mcp230xx.mcp230xx import MCP230XX
     from digitalio import Pull, Direction
 except ImportError:
@@ -67,7 +67,9 @@ class DigitalInOut:
         self.direction = digitalio.Direction.OUTPUT
         self.value = value
 
-    def switch_to_input(self, pull: Pull = None, invert_polarity: bool = False, **kwargs):
+    def switch_to_input(
+        self, pull: Pull = None, invert_polarity: bool = False, **kwargs
+    ):
         """Switch the pin state to a digital input with the provided starting
         pull-up resistor state (optional, no pull-up by default) and input polarity.  Note that
         pull-down resistors are NOT supported!

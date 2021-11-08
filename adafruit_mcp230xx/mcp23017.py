@@ -19,7 +19,7 @@ from .mcp230xx import MCP230XX
 from .digital_inout import DigitalInOut
 
 try:
-    import typing # pylint: disable=unused-import
+    import typing  # pylint: disable=unused-import
     from busio import I2C
 except ImportError:
     pass
