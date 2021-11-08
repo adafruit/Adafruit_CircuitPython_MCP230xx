@@ -7,13 +7,13 @@ from time import sleep
 
 import board
 import busio
-from digitalio import Direction, Pull
+from digitalio import DigitalInOut, Direction, Pull
 from RPi import GPIO
 from adafruit_mcp230xx.mcp23s17 import MCP23S17
 
 # Initialize the SPI bus:
 spi = busio.SPI(board.SCK_1, MOSI=board.MOSI_1, MISO=board.MISO_1)
-cs = digitalio.DigitalInOut(board.CS0)
+cs = DigitalInOut(board.CS0)
 
 # Initialize the MCP23S17 chip on the bonnet
 mcp = MCP23S17(spi, cs)
