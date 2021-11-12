@@ -15,7 +15,7 @@ Digital input/output of the MCP230xx.
 import digitalio
 
 try:
-    import typing  # pylint: disable=unused-import
+    from typing import Optional
     from adafruit_mcp230xx.mcp23xxx import MCP23XXX
     from digitalio import Pull, Direction
 except ImportError:
@@ -48,7 +48,7 @@ class DigitalInOut:
     configurations.
     """
 
-    def __init__(self, pin_number: int, mcp230xx: MCP23XXX):
+    def __init__(self, pin_number: int, mcp230xx: MCP23XXX) -> None:
         """Specify the pin number of the MCP230xx (0...7 for MCP23008, or 0...15
         for MCP23017) and MCP23008 instance.
         """
@@ -60,7 +60,7 @@ class DigitalInOut:
     # is unused by this class).  Do not remove them, instead turn off pylint
     # in this case.
     # pylint: disable=unused-argument
-    def switch_to_output(self, value: bool = False, **kwargs):
+    def switch_to_output(self, value: bool = False, **kwargs) -> None:
         """Switch the pin state to a digital output with the provided starting
         value (True/False for high or low, default is False/low).
         """
@@ -69,7 +69,7 @@ class DigitalInOut:
 
     def switch_to_input(
         self, pull: Pull = None, invert_polarity: bool = False, **kwargs
-    ):
+    ) -> None:
         """Switch the pin state to a digital input with the provided starting
         pull-up resistor state (optional, no pull-up by default) and input polarity.  Note that
         pull-down resistors are NOT supported!
@@ -81,7 +81,7 @@ class DigitalInOut:
     # pylint: enable=unused-argument
 
     @property
-    def value(self):
+    def value(self) -> bool:
         """The value of the pin, either True for high or False for
         low.  Note you must configure as an output or input appropriately
         before reading and writing this value.
@@ -89,14 +89,14 @@ class DigitalInOut:
         return _get_bit(self._mcp.gpio, self._pin)
 
     @value.setter
-    def value(self, val: bool):
+    def value(self, val: bool) -> None:
         if val:
             self._mcp.gpio = _enable_bit(self._mcp.gpio, self._pin)
         else:
             self._mcp.gpio = _clear_bit(self._mcp.gpio, self._pin)
 
     @property
-    def direction(self):
+    def direction(self) -> bool:
         """The direction of the pin, either True for an input or
         False for an output.
         """
@@ -105,7 +105,7 @@ class DigitalInOut:
         return digitalio.Direction.OUTPUT
 
     @direction.setter
-    def direction(self, val: Direction):
+    def direction(self, val: Direction) -> None:
         if val == digitalio.Direction.INPUT:
             self._mcp.iodir = _enable_bit(self._mcp.iodir, self._pin)
         elif val == digitalio.Direction.OUTPUT:
@@ -114,7 +114,7 @@ class DigitalInOut:
             raise ValueError("Expected INPUT or OUTPUT direction!")
 
     @property
-    def pull(self):
+    def pull(self) -> Optional[digitalio.Pull]:
         """Enable or disable internal pull-up resistors for this pin.  A
         value of digitalio.Pull.UP will enable a pull-up resistor, and None will
         disable it.  Pull-down resistors are NOT supported!
@@ -128,7 +128,7 @@ class DigitalInOut:
         return None
 
     @pull.setter
-    def pull(self, val: Pull):
+    def pull(self, val: Pull) -> None:
         try:
             if val is None:
                 self._mcp.gppu = _clear_bit(self._mcp.gppu, self._pin)
@@ -143,7 +143,7 @@ class DigitalInOut:
             raise ValueError("Pull-up/pull-down resistors not supported.") from error
 
     @property
-    def invert_polarity(self):
+    def invert_polarity(self) -> bool:
         """The polarity of the pin, either True for an Inverted or
         False for an normal.
         """
@@ -152,7 +152,7 @@ class DigitalInOut:
         return False
 
     @invert_polarity.setter
-    def invert_polarity(self, val: bool):
+    def invert_polarity(self, val: bool) -> None:
         if val:
             self._mcp.ipol = _enable_bit(self._mcp.ipol, self._pin)
         else:

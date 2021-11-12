@@ -51,7 +51,9 @@ class MCP23016(MCP230XX):
     at the specified I2C address.
     """
 
-    def __init__(self, i2c: I2C, address: int = _MCP23016_ADDRESS, reset: bool = True):
+    def __init__(
+        self, i2c: I2C, address: int = _MCP23016_ADDRESS, reset: bool = True
+    ) -> None:
         super().__init__(i2c, address)
 
         if reset:
@@ -60,7 +62,7 @@ class MCP23016(MCP230XX):
             self._write_u16le(_MCP23016_IPOL0, 0x0000)
 
     @property
-    def gpio(self):
+    def gpio(self) -> int:
         """The raw GPIO output register.  Each bit represents the
         output value of the associated pin (0 = low, 1 = high), assuming that
         pin has been configured as an output previously.
@@ -68,11 +70,11 @@ class MCP23016(MCP230XX):
         return self._read_u16le(_MCP23016_GPIO0)
 
     @gpio.setter
-    def gpio(self, val: int):
+    def gpio(self, val: int) -> None:
         self._write_u16le(_MCP23016_GPIO0, val)
 
     @property
-    def gpioa(self):
+    def gpioa(self) -> int:
         """The raw GPIO 0 output register.  Each bit represents the
         output value of the associated pin (0 = low, 1 = high), assuming that
         pin has been configured as an output previously.
@@ -80,11 +82,11 @@ class MCP23016(MCP230XX):
         return self._read_u8(_MCP23016_GPIO0)
 
     @gpioa.setter
-    def gpioa(self, val: int):
+    def gpioa(self, val: int) -> None:
         self._write_u8(_MCP23016_GPIO0, val)
 
     @property
-    def gpiob(self):
+    def gpiob(self) -> int:
         """The raw GPIO 1 output register.  Each bit represents the
         output value of the associated pin (0 = low, 1 = high), assuming that
         pin has been configured as an output previously.
@@ -92,40 +94,40 @@ class MCP23016(MCP230XX):
         return self._read_u8(_MCP23016_GPIO1)
 
     @gpiob.setter
-    def gpiob(self, val: int):
+    def gpiob(self, val: int) -> None:
         self._write_u8(_MCP23016_GPIO1, val)
 
     @property
-    def iodir(self):
+    def iodir(self) -> int:
         """The raw IODIR direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
         return self._read_u16le(_MCP23016_IODIR0)
 
     @iodir.setter
-    def iodir(self, val: int):
+    def iodir(self, val: int) -> None:
         self._write_u16le(_MCP23016_IODIR0, val)
 
     @property
-    def iodira(self):
+    def iodira(self) -> int:
         """The raw IODIR0 direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
         return self._read_u8(_MCP23016_IODIR0)
 
     @iodira.setter
-    def iodira(self, val: int):
+    def iodira(self, val: int) -> None:
         self._write_u8(_MCP23016_IODIR0, val)
 
     @property
-    def iodirb(self):
+    def iodirb(self) -> int:
         """The raw IODIR0 direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
         return self._read_u8(_MCP23016_IODIR1)
 
     @iodirb.setter
-    def iodirb(self, val: int):
+    def iodirb(self, val: int) -> None:
         self._write_u8(_MCP23016_IODIR1, val)
 
     def get_pin(self, pin: int) -> DigitalInOut:
@@ -136,10 +138,10 @@ class MCP23016(MCP230XX):
             raise ValueError("Pin number must be 0-15.")
         return DigitalInOut(pin, self)
 
-    def clear_inta(self):
+    def clear_inta(self) -> None:
         """Clears port 0 interrupts."""
         self._read_u8(_MCP23016_INTCAP0)
 
-    def clear_intb(self):
+    def clear_intb(self) -> None:
         """Clears port 1 interrupts."""
         self._read_u8(_MCP23016_INTCAP1)

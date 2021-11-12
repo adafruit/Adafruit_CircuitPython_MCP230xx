@@ -33,7 +33,7 @@ class MCP23XXX:
         address: int,
         chip_select: Optional[digitalio.DigitalInOut] = None,
         baudrate: int = 100000,
-    ):
+    ) -> None:
         if chip_select is None:
             self._device = i2c_device.I2CDevice(bus_device, address)
         else:

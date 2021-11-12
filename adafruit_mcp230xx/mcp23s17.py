@@ -18,7 +18,7 @@ from .mcp23sxx import MCP23SXX
 from .digital_inout import DigitalInOut
 
 try:
-    import typing  # pylint: disable=unused-import
+    from typing import List
     from busio import SPI
     import digitalio
 except ImportError:
@@ -59,7 +59,7 @@ class MCP23S17(MCP23SXX):
         address: int = _MCP23S17_ADDRESS,
         reset: bool = True,
         baudrate: int = 100000,
-    ):
+    ) -> None:
         super().__init__(spi, address, chip_select, baudrate=baudrate)
         # For user information
         self.address = address
@@ -71,7 +71,7 @@ class MCP23S17(MCP23SXX):
             self._write_u16le(_MCP23S17_IPOLA, 0x0000)
 
     @property
-    def gpio(self):
+    def gpio(self) -> int:
         """The raw GPIO output register.  Each bit represents the
         output value of the associated pin (0 = low, 1 = high), assuming that
         pin has been configured as an output previously.
@@ -79,11 +79,11 @@ class MCP23S17(MCP23SXX):
         return self._read_u16le(_MCP23S17_GPIOA)
 
     @gpio.setter
-    def gpio(self, val: int):
+    def gpio(self, val: int) -> None:
         self._write_u16le(_MCP23S17_GPIOA, val)
 
     @property
-    def gpioa(self):
+    def gpioa(self) -> int:
         """The raw GPIO A output register.  Each bit represents the
         output value of the associated pin (0 = low, 1 = high), assuming that
         pin has been configured as an output previously.
@@ -91,11 +91,11 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_GPIOA)
 
     @gpioa.setter
-    def gpioa(self, val: int):
+    def gpioa(self, val: int) -> None:
         self._write_u8(_MCP23S17_GPIOA, val)
 
     @property
-    def gpiob(self):
+    def gpiob(self) -> int:
         """The raw GPIO B output register.  Each bit represents the
         output value of the associated pin (0 = low, 1 = high), assuming that
         pin has been configured as an output previously.
@@ -103,44 +103,44 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_GPIOB)
 
     @gpiob.setter
-    def gpiob(self, val: int):
+    def gpiob(self, val: int) -> None:
         self._write_u8(_MCP23S17_GPIOB, val)
 
     @property
-    def iodir(self):
+    def iodir(self) -> int:
         """The raw IODIR direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
         return self._read_u16le(_MCP23S17_IODIRA)
 
     @iodir.setter
-    def iodir(self, val: int):
+    def iodir(self, val: int) -> None:
         self._write_u16le(_MCP23S17_IODIRA, val)
 
     @property
-    def iodira(self):
+    def iodira(self) -> int:
         """The raw IODIR A direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
         return self._read_u8(_MCP23S17_IODIRA)
 
     @iodira.setter
-    def iodira(self, val: int):
+    def iodira(self, val: int) -> None:
         self._write_u8(_MCP23S17_IODIRA, val)
 
     @property
-    def iodirb(self):
+    def iodirb(self) -> int:
         """The raw IODIR B direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
         return self._read_u8(_MCP23S17_IODIRB)
 
     @iodirb.setter
-    def iodirb(self, val: int):
+    def iodirb(self, val: int) -> None:
         self._write_u8(_MCP23S17_IODIRB, val)
 
     @property
-    def gppu(self):
+    def gppu(self) -> int:
         """The raw GPPU pull-up register.  Each bit represents
         if a pull-up is enabled on the specified pin (1 = pull-up enabled,
         0 = pull-up disabled).  Note pull-down resistors are NOT supported!
@@ -148,11 +148,11 @@ class MCP23S17(MCP23SXX):
         return self._read_u16le(_MCP23S17_GPPUA)
 
     @gppu.setter
-    def gppu(self, val: int):
+    def gppu(self, val: int) -> None:
         self._write_u16le(_MCP23S17_GPPUA, val)
 
     @property
-    def gppua(self):
+    def gppua(self) -> int:
         """The raw GPPU A pull-up register.  Each bit represents
         if a pull-up is enabled on the specified pin (1 = pull-up enabled,
         0 = pull-up disabled).  Note pull-down resistors are NOT supported!
@@ -160,11 +160,11 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_GPPUA)
 
     @gppua.setter
-    def gppua(self, val: int):
+    def gppua(self, val: int) -> None:
         self._write_u8(_MCP23S17_GPPUA, val)
 
     @property
-    def gppub(self):
+    def gppub(self) -> int:
         """The raw GPPU B pull-up register.  Each bit represents
         if a pull-up is enabled on the specified pin (1 = pull-up enabled,
         0 = pull-up disabled).  Note pull-down resistors are NOT supported!
@@ -172,7 +172,7 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_GPPUB)
 
     @gppub.setter
-    def gppub(self, val: int):
+    def gppub(self, val: int) -> None:
         self._write_u8(_MCP23S17_GPPUB, val)
 
     def get_pin(self, pin: int) -> DigitalInOut:
@@ -184,7 +184,7 @@ class MCP23S17(MCP23SXX):
         return DigitalInOut(pin, self)
 
     @property
-    def ipol(self):
+    def ipol(self) -> int:
         """The raw IPOL output register.  Each bit represents the
         polarity value of the associated pin (0 = normal, 1 = inverted), assuming that
         pin has been configured as an input previously.
@@ -192,11 +192,11 @@ class MCP23S17(MCP23SXX):
         return self._read_u16le(_MCP23S17_IPOLA)
 
     @ipol.setter
-    def ipol(self, val: int):
+    def ipol(self, val: int) -> None:
         self._write_u16le(_MCP23S17_IPOLA, val)
 
     @property
-    def ipola(self):
+    def ipola(self) -> int:
         """The raw IPOL A output register.  Each bit represents the
         polarity value of the associated pin (0 = normal, 1 = inverted), assuming that
         pin has been configured as an input previously.
@@ -204,11 +204,11 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_IPOLA)
 
     @ipola.setter
-    def ipola(self, val: int):
+    def ipola(self, val: int) -> None:
         self._write_u8(_MCP23S17_IPOLA, val)
 
     @property
-    def ipolb(self):
+    def ipolb(self) -> int:
         """The raw IPOL B output register.  Each bit represents the
         polarity value of the associated pin (0 = normal, 1 = inverted), assuming that
         pin has been configured as an input previously.
@@ -216,11 +216,11 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_IPOLB)
 
     @ipolb.setter
-    def ipolb(self, val: int):
+    def ipolb(self, val: int) -> None:
         self._write_u8(_MCP23S17_IPOLB, val)
 
     @property
-    def interrupt_configuration(self):
+    def interrupt_configuration(self) -> int:
         """The raw INTCON interrupt control register. The INTCON register
         controls how the associated pin value is compared for the
         interrupt-on-change feature. If  a  bit  is  set,  the  corresponding
@@ -231,11 +231,11 @@ class MCP23S17(MCP23SXX):
         return self._read_u16le(_MCP23S17_INTCONA)
 
     @interrupt_configuration.setter
-    def interrupt_configuration(self, val: int):
+    def interrupt_configuration(self, val: int) -> None:
         self._write_u16le(_MCP23S17_INTCONA, val)
 
     @property
-    def interrupt_enable(self):
+    def interrupt_enable(self) -> int:
         """The raw GPINTEN interrupt control register. The GPINTEN register
         controls the interrupt-on-change feature for each pin. If a bit is
         set, the corresponding pin is enabled for interrupt-on-change.
@@ -245,11 +245,11 @@ class MCP23S17(MCP23SXX):
         return self._read_u16le(_MCP23S17_GPINTENA)
 
     @interrupt_enable.setter
-    def interrupt_enable(self, val: int):
+    def interrupt_enable(self, val: int) -> None:
         self._write_u16le(_MCP23S17_GPINTENA, val)
 
     @property
-    def default_value(self):
+    def default_value(self) -> int:
         """The raw DEFVAL interrupt control register. The default comparison
         value is configured in the DEFVAL register. If enabled (via GPINTEN
         and INTCON) to compare against the DEFVAL register, an opposite value
@@ -258,11 +258,11 @@ class MCP23S17(MCP23SXX):
         return self._read_u16le(_MCP23S17_DEFVALA)
 
     @default_value.setter
-    def default_value(self, val: int):
+    def default_value(self, val: int) -> None:
         self._write_u16le(_MCP23S17_DEFVALA, val)
 
     @property
-    def io_control(self):
+    def io_control(self) -> int:
         """The raw IOCON configuration register. Bit 1 controls interrupt
         polarity (1 = active-high, 0 = active-low). Bit 2 is whether irq pin
         is open drain (1 = open drain, 0 = push-pull). Bit 3 is unused.
@@ -274,12 +274,12 @@ class MCP23S17(MCP23SXX):
         return self._read_u8(_MCP23S17_IOCON)
 
     @io_control.setter
-    def io_control(self, val: int):
+    def io_control(self, val: int) -> None:
         val &= ~0x80
         self._write_u8(_MCP23S17_IOCON, val)
 
     @property
-    def int_flag(self):
+    def int_flag(self) -> List[int]:
         """Returns a list with the pin numbers that caused an interrupt
         port A ----> pins 0-7
         port B ----> pins 8-15
@@ -289,7 +289,7 @@ class MCP23S17(MCP23SXX):
         return flags
 
     @property
-    def int_flaga(self):
+    def int_flaga(self) -> List[int]:
         """Returns a list of pin numbers that caused an interrupt in port A
         pins: 0-7
         """
@@ -298,7 +298,7 @@ class MCP23S17(MCP23SXX):
         return flags
 
     @property
-    def int_flagb(self):
+    def int_flagb(self) -> List[int]:
         """Returns a list of pin numbers that caused an interrupt in port B
         pins: 8-15
         """
@@ -306,14 +306,14 @@ class MCP23S17(MCP23SXX):
         flags = [pin + 8 for pin in range(8) if intfb & (1 << pin)]
         return flags
 
-    def clear_ints(self):
+    def clear_ints(self) -> None:
         """Clears interrupts by reading INTCAP."""
         self._read_u16le(_MCP23S17_INTCAPA)
 
-    def clear_inta(self):
+    def clear_inta(self) -> None:
         """Clears port A interrupts."""
         self._read_u8(_MCP23S17_INTCAPA)
 
-    def clear_intb(self):
+    def clear_intb(self) -> None:
         """Clears port B interrupts."""
         self._read_u8(_MCP23S17_INTCAPB)

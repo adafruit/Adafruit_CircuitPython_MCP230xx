@@ -43,7 +43,7 @@ class MCP23SXX(MCP23XXX):
         address: int,
         chip_select: digitalio.DigitalInOut,
         baudrate: int = 100000,
-    ):
+    ) -> None:
         self.cmd_write = MCP23SXX_CODE_WRITE | (address << 1)
         self.cmd_read = MCP23SXX_CODE_READ | (address << 1)
         super().__init__(spi, address, chip_select, baudrate=baudrate)
@@ -57,7 +57,7 @@ class MCP23SXX(MCP23XXX):
             bus_device.write_readinto(_OUT_BUFFER, _IN_BUFFER)
         return (_IN_BUFFER[3] << 8) | _IN_BUFFER[2]
 
-    def _write_u16le(self, register: int, value: int):
+    def _write_u16le(self, register: int, value: int) -> None:
         # Write an unsigned 16 bit little endian value to the specified 8-bit
         # register.
         _OUT_BUFFER[0] = self.cmd_write
@@ -75,7 +75,7 @@ class MCP23SXX(MCP23XXX):
             bus_device.write_readinto(_OUT_BUFFER, _IN_BUFFER)
         return _IN_BUFFER[2]
 
-    def _write_u8(self, register: int, value: int):
+    def _write_u8(self, register: int, value: int) -> None:
         # Write an 8 bit value to the specified 8-bit register.
         _OUT_BUFFER[0] = self.cmd_write
         _OUT_BUFFER[1] = register & 0xFF

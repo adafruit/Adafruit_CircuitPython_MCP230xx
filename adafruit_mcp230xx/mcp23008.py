@@ -43,7 +43,9 @@ class MCP23008(MCP230XX):
     at the specified I2C address.
     """
 
-    def __init__(self, i2c: I2C, address: int = _MCP23008_ADDRESS, reset: bool = True):
+    def __init__(
+        self, i2c: I2C, address: int = _MCP23008_ADDRESS, reset: bool = True
+    ) -> None:
         super().__init__(i2c, address)
 
         if reset:
@@ -53,7 +55,7 @@ class MCP23008(MCP230XX):
             self._write_u8(_MCP23008_IPOL, 0x00)
 
     @property
-    def gpio(self):
+    def gpio(self) -> int:
         """The raw GPIO output register.  Each bit represents the
         output value of the associated pin (0 = low, 1 = high), assuming that
         pin has been configured as an output previously.
@@ -61,22 +63,22 @@ class MCP23008(MCP230XX):
         return self._read_u8(_MCP23008_GPIO)
 
     @gpio.setter
-    def gpio(self, val: int):
+    def gpio(self, val: int) -> None:
         self._write_u8(_MCP23008_GPIO, val)
 
     @property
-    def iodir(self):
+    def iodir(self) -> int:
         """The raw IODIR direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
         return self._read_u8(_MCP23008_IODIR)
 
     @iodir.setter
-    def iodir(self, val: int):
+    def iodir(self, val: int) -> None:
         self._write_u8(_MCP23008_IODIR, val)
 
     @property
-    def gppu(self):
+    def gppu(self) -> int:
         """The raw GPPU pull-up register.  Each bit represents
         if a pull-up is enabled on the specified pin (1 = pull-up enabled,
         0 = pull-up disabled).  Note pull-down resistors are NOT supported!
@@ -84,7 +86,7 @@ class MCP23008(MCP230XX):
         return self._read_u8(_MCP23008_GPPU)
 
     @gppu.setter
-    def gppu(self, val: int):
+    def gppu(self, val: int) -> None:
         self._write_u8(_MCP23008_GPPU, val)
 
     def get_pin(self, pin: int) -> DigitalInOut:
