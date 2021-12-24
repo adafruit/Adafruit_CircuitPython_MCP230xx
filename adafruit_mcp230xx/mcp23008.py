@@ -16,6 +16,12 @@ from micropython import const
 from .mcp230xx import MCP230XX
 from .digital_inout import DigitalInOut
 
+try:
+    import typing  # pylint: disable=unused-import
+    from busio import I2C
+except ImportError:
+    pass
+
 __version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 
@@ -37,7 +43,9 @@ class MCP23008(MCP230XX):
     at the specified I2C address.
     """
 
-    def __init__(self, i2c, address=_MCP23008_ADDRESS, reset=True):
+    def __init__(
+        self, i2c: I2C, address: int = _MCP23008_ADDRESS, reset: bool = True
+    ) -> None:
         super().__init__(i2c, address)
 
         if reset:
@@ -47,7 +55,7 @@ class MCP23008(MCP230XX):
             self._write_u8(_MCP23008_IPOL, 0x00)
 
     @property
-    def gpio(self):
+    def gpio(self) -> int:
         """The raw GPIO output register.  Each bit represents the
         output value of the associated pin (0 = low, 1 = high), assuming that
         pin has been configured as an output previously.
@@ -55,22 +63,22 @@ class MCP23008(MCP230XX):
         return self._read_u8(_MCP23008_GPIO)
 
     @gpio.setter
-    def gpio(self, val):
+    def gpio(self, val: int) -> None:
         self._write_u8(_MCP23008_GPIO, val)
 
     @property
-    def iodir(self):
+    def iodir(self) -> int:
         """The raw IODIR direction register.  Each bit represents
         direction of a pin, either 1 for an input or 0 for an output mode.
         """
         return self._read_u8(_MCP23008_IODIR)
 
     @iodir.setter
-    def iodir(self, val):
+    def iodir(self, val: int) -> None:
         self._write_u8(_MCP23008_IODIR, val)
 
     @property
-    def gppu(self):
+    def gppu(self) -> int:
         """The raw GPPU pull-up register.  Each bit represents
         if a pull-up is enabled on the specified pin (1 = pull-up enabled,
         0 = pull-up disabled).  Note pull-down resistors are NOT supported!
@@ -78,10 +86,10 @@ class MCP23008(MCP230XX):
         return self._read_u8(_MCP23008_GPPU)
 
     @gppu.setter
-    def gppu(self, val):
+    def gppu(self, val: int) -> None:
         self._write_u8(_MCP23008_GPPU, val)
 
-    def get_pin(self, pin):
+    def get_pin(self, pin: int) -> DigitalInOut:
         """Convenience function to create an instance of the DigitalInOut class
         pointing at the specified pin of this MCP23008 device.
         """
