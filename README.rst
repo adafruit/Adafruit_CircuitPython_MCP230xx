@@ -63,6 +63,11 @@ API documentation for this library can be found on `Read the Docs <https://docs.
 
 For information on building library documentation, please check out `this guide <https://learn.adafruit.com/creating-and-sharing-a-circuitpython-library/sharing-our-docs-on-readthedocs#sphinx-5-1>`_.
 
+Warning
+=======
+Some people have reported an undocumented bug that can potentially corrupt the I2C bus.
+It occurs if an MCP230XX input pin state changes during I2C readout. **This should be very rare.** For more information, see this `forum post <https://www.microchip.com/forums/m646539.aspx>`_ and this `knowledge base article <https://microchipsupport.force.com/s/article/On-MCP23008-MCP23017-SDA-line-change-when-GPIO7-input-change>`_ .
+
 Contributing
 ============
 
