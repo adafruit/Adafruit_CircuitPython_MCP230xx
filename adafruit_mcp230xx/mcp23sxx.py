@@ -22,7 +22,7 @@ try:
 except ImportError:
     pass
 
-__version__ = "0.0.0-auto.0"
+__version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 
 # shared between both the MCP23S17 class to reduce memory allocations.

@@ -15,7 +15,7 @@ CircuitPython module for the MCP23017 and MCP23008 I2C I/O extenders.
 
 from .mcp23xxx import MCP23XXX
 
-__version__ = "0.0.0-auto.0"
+__version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 
 # Global buffer for reading and writing registers with the devices.  This is
