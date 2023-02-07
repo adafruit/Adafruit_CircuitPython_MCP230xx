@@ -12,6 +12,18 @@
 CircuitPython module for the MCP23017 I2C I/O extenders.
 
 * Author(s): Tony DiCola
+
+Implementation Notes
+--------------------
+
+**Hardware:**
+
+* `MCP23017 - i2c 16 input/output port expander
+  <https://www.adafruit.com/product/732>`_
+
+* `Adafruit MCP23017 I2C GPIO Expander Breakout - STEMMA QT / Qwiic
+  <https://www.adafruit.com/product/5346>`_
+
 """
 
 from micropython import const

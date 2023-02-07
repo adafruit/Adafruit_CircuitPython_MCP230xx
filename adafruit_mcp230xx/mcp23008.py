@@ -10,6 +10,15 @@
 CircuitPython module for the MCP23008 I2C I/O extenders.
 
 * Author(s): Tony DiCola
+
+Implementation Notes
+--------------------
+
+**Hardware:**
+
+* `MCP23008 - i2c 8 input/output port expander
+  <https://www.adafruit.com/product/593>`_
+
 """
 
 from micropython import const
