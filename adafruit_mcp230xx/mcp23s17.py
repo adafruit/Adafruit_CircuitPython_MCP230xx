@@ -45,6 +45,7 @@ _MCP23S17_INTFB = const(0x0F)
 _MCP23S17_INTCAPA = const(0x10)
 _MCP23S17_INTCAPB = const(0x11)
 
+
 # pylint: disable=too-many-arguments
 # pylint: disable=too-many-public-methods
 class MCP23S17(MCP23SXX):

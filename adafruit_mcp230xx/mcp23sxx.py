@@ -33,6 +33,7 @@ _IN_BUFFER = bytearray(4)
 MCP23SXX_CODE_READ = 0x41
 MCP23SXX_CODE_WRITE = 0x40
 
+
 # pylint: disable=too-few-public-methods
 class MCP23SXX(MCP23XXX):
     """Base class for MCP23Sxx devices."""

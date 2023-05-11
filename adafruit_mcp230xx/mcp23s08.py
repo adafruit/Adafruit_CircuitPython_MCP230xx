@@ -39,6 +39,7 @@ _MCP23S08_INTF = const(0x07)
 _MCP23S08_INTCAP = const(0x08)
 _MCP23S08_GPIO = const(0x09)
 
+
 # pylint: disable=too-many-arguments
 class MCP23S08(MCP23SXX):
     """Supports MCP23S08 instance on specified I2C bus and optionally

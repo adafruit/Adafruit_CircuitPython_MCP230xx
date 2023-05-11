@@ -24,6 +24,7 @@ except ImportError:
 __version__ = "0.0.0+auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 
+
 # Internal helpers to simplify setting and getting a bit inside an integer.
 def _get_bit(val, bit: int) -> int:
     return val & (1 << bit) > 0
