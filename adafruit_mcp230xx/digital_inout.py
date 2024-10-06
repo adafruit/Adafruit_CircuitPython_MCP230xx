@@ -145,10 +145,10 @@ class DigitalInOut:
 
     @property
     def invert_polarity(self) -> bool:
+        """The polarity of the pin, either True for an Inverted or
+        False for an normal.
+        """
         try:
-            """The polarity of the pin, either True for an Inverted or
-            False for an normal.
-            """
             if _get_bit(self._mcp.ipol, self._pin):
                 return True
             return False
