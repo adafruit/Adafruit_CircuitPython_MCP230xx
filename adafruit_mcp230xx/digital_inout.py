@@ -153,15 +153,17 @@ class DigitalInOut:
                 return True
             return False
         except AttributeError:
-            print("IO expander doesn't support inverting polarity! Continuing...")
             return False
 
     @invert_polarity.setter
     def invert_polarity(self, val: bool) -> None:
-        try:
-            if val:
+        if val:
+            try:
                 self._mcp.ipol = _enable_bit(self._mcp.ipol, self._pin)
-            else:
+            except AttributeError as error:
+                raise ValueError("Inverted polarity is not supported.") from error
+        else:
+            try:
                 self._mcp.ipol = _clear_bit(self._mcp.ipol, self._pin)
-        except AttributeError:
-            print("IO expander doesn't support inverting polarity! Continuing...")
+            except AttributeError:
+                return
