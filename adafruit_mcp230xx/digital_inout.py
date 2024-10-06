@@ -145,16 +145,23 @@ class DigitalInOut:
 
     @property
     def invert_polarity(self) -> bool:
-        """The polarity of the pin, either True for an Inverted or
-        False for an normal.
-        """
-        if _get_bit(self._mcp.ipol, self._pin):
-            return True
-        return False
+        try:
+            """The polarity of the pin, either True for an Inverted or
+            False for an normal.
+            """
+            if _get_bit(self._mcp.ipol, self._pin):
+                return True
+            return False
+        except AttributeError:
+            print("IO expander doesn't support inverting polarity! Continuing...")
+            return False
 
     @invert_polarity.setter
     def invert_polarity(self, val: bool) -> None:
-        if val:
-            self._mcp.ipol = _enable_bit(self._mcp.ipol, self._pin)
-        else:
-            self._mcp.ipol = _clear_bit(self._mcp.ipol, self._pin)
+        try:
+            if val:
+                self._mcp.ipol = _enable_bit(self._mcp.ipol, self._pin)
+            else:
+                self._mcp.ipol = _clear_bit(self._mcp.ipol, self._pin)
+        except AttributeError:
+            print("IO expander doesn't support inverting polarity! Continuing...")
