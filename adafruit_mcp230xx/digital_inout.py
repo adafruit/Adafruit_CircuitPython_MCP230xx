@@ -148,22 +148,19 @@ class DigitalInOut:
         """The polarity of the pin, either True for an Inverted or
         False for an normal.
         """
-        try:
-            if _get_bit(self._mcp.ipol, self._pin):
-                return True
-            return False
-        except AttributeError:
-            return False
+        if hasattr(self._mcp, "ipol") and _get_bit(self._mcp.ipol, self._pin):
+            return True
+        return False
 
     @invert_polarity.setter
     def invert_polarity(self, val: bool) -> None:
         if val:
-            try:
+            if hasattr(self._mcp, "ipol"):
                 self._mcp.ipol = _enable_bit(self._mcp.ipol, self._pin)
-            except AttributeError as error:
-                raise ValueError("Inverted polarity is not supported.") from error
+            else:
+                raise ValueError("Inverted polarity is not supported.")
         else:
-            try:
+            if hasattr(self._mcp, "ipol"):
                 self._mcp.ipol = _clear_bit(self._mcp.ipol, self._pin)
-            except AttributeError:
+            else:
                 return
