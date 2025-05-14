@@ -4,9 +4,9 @@
 
 # -*- coding: utf-8 -*-
 
+import datetime
 import os
 import sys
-import datetime
 
 sys.path.insert(0, os.path.abspath(".."))
 
@@ -52,9 +52,7 @@ project = "Adafruit MCP230xx Library"
 creation_year = "2017"
 current_year = str(datetime.datetime.now().year)
 year_duration = (
-    current_year
-    if current_year == creation_year
-    else creation_year + " - " + current_year
+    current_year if current_year == creation_year else creation_year + " - " + current_year
 )
 copyright = year_duration + " Tony DiCola"
 author = "Tony DiCola"

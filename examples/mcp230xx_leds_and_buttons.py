@@ -5,6 +5,7 @@
 import board
 import busio
 from digitalio import Direction, Pull
+
 from adafruit_mcp230xx.mcp23017 import MCP23017
 
 # Initialize the I2C bus:

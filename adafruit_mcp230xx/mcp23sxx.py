@@ -16,9 +16,10 @@ CircuitPython module for the MCP23S17 SPI I/O extenders.
 from .mcp23xxx import MCP23XXX
 
 try:
-    import typing  # pylint: disable=unused-import
-    from busio import SPI
+    import typing
+
     import digitalio
+    from busio import SPI
 except ImportError:
     pass
 
@@ -34,7 +35,6 @@ MCP23SXX_CODE_READ = 0x41
 MCP23SXX_CODE_WRITE = 0x40
 
 
-# pylint: disable=too-few-public-methods
 class MCP23SXX(MCP23XXX):
     """Base class for MCP23Sxx devices."""
 

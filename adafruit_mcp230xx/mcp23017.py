@@ -3,8 +3,6 @@
 #
 # SPDX-License-Identifier: MIT
 
-# pylint: disable=too-many-public-methods
-
 """
 `mcp23017`
 ====================================================
@@ -27,11 +25,13 @@ Implementation Notes
 """
 
 from micropython import const
-from .mcp230xx import MCP230XX
+
 from .digital_inout import DigitalInOut
+from .mcp230xx import MCP230XX
 
 try:
     from typing import List
+
     from busio import I2C
 except ImportError:
     pass
@@ -63,9 +63,7 @@ class MCP23017(MCP230XX):
     at the specified I2C address.
     """
 
-    def __init__(
-        self, i2c: I2C, address: int = _MCP23017_ADDRESS, reset: bool = True
-    ) -> None:
+    def __init__(self, i2c: I2C, address: int = _MCP23017_ADDRESS, reset: bool = True) -> None:
         super().__init__(i2c, address)
         if reset:
             # Reset to all inputs with no pull-ups and no inverted polarity.

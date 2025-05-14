@@ -14,13 +14,15 @@ CircuitPython module for the MCP23S08 I2C I/O extenders.
 """
 
 from micropython import const
-from .mcp23sxx import MCP23SXX
+
 from .digital_inout import DigitalInOut
+from .mcp23sxx import MCP23SXX
 
 try:
-    import typing  # pylint: disable=unused-import
-    from busio import SPI
+    import typing
+
     import digitalio
+    from busio import SPI
 except ImportError:
     pass
 
@@ -40,7 +42,6 @@ _MCP23S08_INTCAP = const(0x08)
 _MCP23S08_GPIO = const(0x09)
 
 
-# pylint: disable=too-many-arguments
 class MCP23S08(MCP23SXX):
     """Supports MCP23S08 instance on specified I2C bus and optionally
     at the specified I2C address.
