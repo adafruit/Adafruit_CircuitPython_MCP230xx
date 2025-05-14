@@ -14,13 +14,15 @@ CircuitPython module for the MCP23S17 SPI I/O extenders.
 """
 
 from micropython import const
-from .mcp23sxx import MCP23SXX
+
 from .digital_inout import DigitalInOut
+from .mcp23sxx import MCP23SXX
 
 try:
     from typing import List
-    from busio import SPI
+
     import digitalio
+    from busio import SPI
 except ImportError:
     pass
 
@@ -46,8 +48,6 @@ _MCP23S17_INTCAPA = const(0x10)
 _MCP23S17_INTCAPB = const(0x11)
 
 
-# pylint: disable=too-many-arguments
-# pylint: disable=too-many-public-methods
 class MCP23S17(MCP23SXX):
     """Supports MCP23S17 instance on specified SPI bus and optionally
     at the specified SPI address.

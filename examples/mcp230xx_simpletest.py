@@ -53,4 +53,4 @@ while True:
     pin0.value = False
     time.sleep(0.5)
     # Read pin 1 and print its state.
-    print("Pin 1 is at a high level: {0}".format(pin1.value))
+    print(f"Pin 1 is at a high level: {pin1.value}")

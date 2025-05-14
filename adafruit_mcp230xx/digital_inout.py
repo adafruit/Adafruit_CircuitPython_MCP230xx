@@ -16,8 +16,10 @@ import digitalio
 
 try:
     from typing import Optional
+
+    from digitalio import Direction, Pull
+
     from adafruit_mcp230xx.mcp23xxx import MCP23XXX
-    from digitalio import Pull, Direction
 except ImportError:
     pass
 
@@ -60,7 +62,6 @@ class DigitalInOut:
     # with DigitalInout class (which allows specifying pull, etc. which
     # is unused by this class).  Do not remove them, instead turn off pylint
     # in this case.
-    # pylint: disable=unused-argument
     def switch_to_output(self, value: bool = False, **kwargs) -> None:
         """Switch the pin state to a digital output with the provided starting
         value (True/False for high or low, default is False/low).
@@ -68,9 +69,7 @@ class DigitalInOut:
         self.direction = digitalio.Direction.OUTPUT
         self.value = value
 
-    def switch_to_input(
-        self, pull: Pull = None, invert_polarity: bool = False, **kwargs
-    ) -> None:
+    def switch_to_input(self, pull: Pull = None, invert_polarity: bool = False, **kwargs) -> None:
         """Switch the pin state to a digital input with the provided starting
         pull-up resistor state (optional, no pull-up by default) and input polarity.  Note that
         pull-down resistors are NOT supported!
@@ -78,8 +77,6 @@ class DigitalInOut:
         self.direction = digitalio.Direction.INPUT
         self.pull = pull
         self.invert_polarity = invert_polarity
-
-    # pylint: enable=unused-argument
 
     @property
     def value(self) -> bool:
@@ -159,8 +156,7 @@ class DigitalInOut:
                 self._mcp.ipol = _enable_bit(self._mcp.ipol, self._pin)
             else:
                 raise ValueError("Inverted polarity is not supported.")
+        elif hasattr(self._mcp, "ipol"):
+            self._mcp.ipol = _clear_bit(self._mcp.ipol, self._pin)
         else:
-            if hasattr(self._mcp, "ipol"):
-                self._mcp.ipol = _clear_bit(self._mcp.ipol, self._pin)
-            else:
-                return
+            return

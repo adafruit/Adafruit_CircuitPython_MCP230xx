@@ -24,7 +24,6 @@ __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_MCP230xx.git"
 _BUFFER = bytearray(3)
 
 
-# pylint: disable=too-few-public-methods
 class MCP230XX(MCP23XXX):
     """Base class for MCP230xx devices."""
 
@@ -34,9 +33,7 @@ class MCP230XX(MCP23XXX):
         with self._device as bus_device:
             _BUFFER[0] = register & 0xFF
 
-            bus_device.write_then_readinto(
-                _BUFFER, _BUFFER, out_end=1, in_start=1, in_end=3
-            )
+            bus_device.write_then_readinto(_BUFFER, _BUFFER, out_end=1, in_start=1, in_end=3)
             return (_BUFFER[2] << 8) | _BUFFER[1]
 
     def _write_u16le(self, register: int, val: int) -> None:
@@ -53,9 +50,7 @@ class MCP230XX(MCP23XXX):
         with self._device as bus_device:
             _BUFFER[0] = register & 0xFF
 
-            bus_device.write_then_readinto(
-                _BUFFER, _BUFFER, out_end=1, in_start=1, in_end=2
-            )
+            bus_device.write_then_readinto(_BUFFER, _BUFFER, out_end=1, in_start=1, in_end=2)
             return _BUFFER[1]
 
     def _write_u8(self, register: int, val: int) -> None:

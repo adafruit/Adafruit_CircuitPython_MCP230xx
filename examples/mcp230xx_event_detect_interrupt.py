@@ -8,6 +8,7 @@ import board
 import busio
 from digitalio import Direction, Pull
 from RPi import GPIO
+
 from adafruit_mcp230xx.mcp23017 import MCP23017
 
 # Initialize the I2C bus:
@@ -47,8 +48,8 @@ mcp.clear_ints()  # Interrupts need to be cleared initially
 def print_interrupt(port):
     """Callback function to be called when an Interrupt occurs."""
     for pin_flag in mcp.int_flag:
-        print("Interrupt connected to Pin: {}".format(port))
-        print("Pin number: {} changed to: {}".format(pin_flag, pins[pin_flag].value))
+        print(f"Interrupt connected to Pin: {port}")
+        print(f"Pin number: {pin_flag} changed to: {pins[pin_flag].value}")
     mcp.clear_ints()
 
 
