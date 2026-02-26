@@ -185,7 +185,7 @@ class MCP23008(MCP230XX):
         flags = [pin for pin in range(8) if intf & (1 << pin)]
         return flags
 
-     @property
+    @property
     def int_cap(self) -> List[int]:
         """Returns a list with the pin values at time of interrupt
         pins 0-7
