@@ -11,11 +11,13 @@
 # Author: James Douglas
 
 import asyncio
+
 import board
 import busio
 import digitalio
 
 from adafruit_mcp230xx.mcp23008 import MCP23008
+
 # from adafruit_mcp230xx.mcp23017 import MCP23017
 
 # I2C setup
@@ -38,15 +40,16 @@ for pin in pins:
 
 
 # Setup Initial Interrupt config on MCP230xx
-mcp.interrupt_enable = 0xFF # Enable Interrupts in all pins - 0xFFFF for MCP23017
-mcp.interrupt_configuration = 0x00 # interrupt on any change - 0x0000 for MCP23017
-mcp.io_control = 0x04 # Open-drain INT pin
+mcp.interrupt_enable = 0xFF  # Enable Interrupts in all pins - 0xFFFF for MCP23017
+mcp.interrupt_configuration = 0x00  # interrupt on any change - 0x0000 for MCP23017
+mcp.io_control = 0x04  # Open-drain INT pin
 mcp.clear_ints()
 
 # Setup interrupt listener on Pico
 int_listener = digitalio.DigitalInOut(board.GP15)
 int_listener.direction = digitalio.Direction.INPUT
 int_listener.pull = digitalio.Pull.UP
+
 
 async def monitor_interrupts():
     """
@@ -85,6 +88,7 @@ async def monitor_interrupts():
         # Yield control back to the event loop
         await asyncio.sleep(0.01)
 
+
 async def main():
     """
     Main async function to run the interrupt monitoring loop.
@@ -93,6 +97,7 @@ async def main():
     just awaiting monitor_interrupts()
     """
     await monitor_interrupts()
+
 
 # Run the async loop
 if __name__ == "__main__":
