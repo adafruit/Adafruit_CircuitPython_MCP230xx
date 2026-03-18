@@ -27,7 +27,7 @@ from .digital_inout import DigitalInOut
 from .mcp230xx import MCP230XX
 
 try:
-    import typing
+    from typing import List
 
     from busio import I2C
 except ImportError:
@@ -105,3 +105,94 @@ class MCP23008(MCP230XX):
         if not 0 <= pin <= 7:
             raise ValueError("Pin number must be 0-7.")
         return DigitalInOut(pin, self)
+
+    @property
+    def ipol(self) -> int:
+        """The raw IPOL output register.  Each bit represents the
+        polarity value of the associated pin (0 = normal, 1 = inverted), assuming that
+        pin has been configured as an input previously.
+        """
+        return self._read_u8(_MCP23008_IPOL)
+
+    @ipol.setter
+    def ipol(self, val: int) -> None:
+        self._write_u8(_MCP23008_IPOL, val)
+
+    @property
+    def interrupt_configuration(self) -> int:
+        """The raw INTCON interrupt control register. The INTCON register
+        controls how the associated pin value is compared for the
+        interrupt-on-change feature. If  a  bit  is  set,  the  corresponding
+        I/O  pin  is  compared against the associated bit in the DEFVAL
+        register. If a bit value is clear, the corresponding I/O pin is
+        compared against the previous value.
+        """
+        return self._read_u8(_MCP23008_INTCON)
+
+    @interrupt_configuration.setter
+    def interrupt_configuration(self, val: int) -> None:
+        self._write_u8(_MCP23008_INTCON, val)
+
+    @property
+    def interrupt_enable(self) -> int:
+        """The raw GPINTEN interrupt control register. The GPINTEN register
+        controls the interrupt-on-change feature for each pin. If a bit is
+        set, the corresponding pin is enabled for interrupt-on-change.
+        The DEFVAL and INTCON registers must also be configured if any pins
+        are enabled for interrupt-on-change.
+        """
+        return self._read_u8(_MCP23008_GPINTEN)
+
+    @interrupt_enable.setter
+    def interrupt_enable(self, val: int) -> None:
+        self._write_u8(_MCP23008_GPINTEN, val)
+
+    @property
+    def default_value(self) -> int:
+        """The raw DEFVAL interrupt control register. The default comparison
+        value is configured in the DEFVAL register. If enabled (via GPINTEN
+        and INTCON) to compare against the DEFVAL register, an opposite value
+        on the associated pin will cause an interrupt to occur.
+        """
+        return self._read_u8(_MCP23008_DEFVAL)
+
+    @default_value.setter
+    def default_value(self, val: int) -> None:
+        self._write_u8(_MCP23008_DEFVAL, val)
+
+    @property
+    def io_control(self) -> int:
+        """The raw IOCON configuration register. Bit 1 controls interrupt
+        polarity (1 = active-high, 0 = active-low). Bit 2 is whether irq pin
+        is open drain (1 = open drain, 0 = push-pull). Bit 3 is unused.
+        Bit 4 is whether SDA slew rate is enabled (1 = yes). Bit 5 is if I2C
+        address pointer auto-increments (1 = no). Bit 6 is unused. Bit 7 is
+        unused.
+        """
+        return self._read_u8(_MCP23008_IOCON)
+
+    @io_control.setter
+    def io_control(self, val: int) -> None:
+        val &= ~0x80
+        self._write_u8(_MCP23008_IOCON, val)
+
+    @property
+    def int_flag(self) -> List[int]:
+        """Returns a list with the pin numbers that caused an interrupt
+        pins 0-7
+        """
+        intf = self._read_u8(_MCP23008_INTF)
+        flags = [pin for pin in range(8) if intf & (1 << pin)]
+        return flags
+
+    @property
+    def int_cap(self) -> List[int]:
+        """Returns a list with the pin values at time of interrupt
+        pins 0-7
+        """
+        intcap = self._read_u8(_MCP23008_INTCAP)
+        return [(intcap >> pin) & 1 for pin in range(8)]
+
+    def clear_ints(self) -> None:
+        """Clears interrupts by reading INTCAP."""
+        self._read_u8(_MCP23008_INTCAP)
